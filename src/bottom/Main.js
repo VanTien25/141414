@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, FlatList, TouchableOpacity, ScrollView, StatusBar, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import Header from '../common/Header'
@@ -6,6 +6,10 @@ import { products } from '../Products'
 import ProductItem from '../common/ProductItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, addToWishlist } from '../redux/actions/Actions';
+import Search from '../common/Search';
+import Category from '../Screens/Category';
+
+import { useNavigation } from '@react-navigation/native';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -16,6 +20,10 @@ const Main = () => {
   const [jacketList, setJacketList] = useState([]);
   const [trousersList, setTrousersList] = useState([]);
 
+  const navigation = useNavigation();
+  const goListCategory = () => {
+    navigation.navigate('Category')
+  }
   useEffect(() => {
     let categories = [];
     products.category.map(item => {
@@ -33,137 +41,156 @@ const Main = () => {
   // const items = useSelector(state => state);
   // console.log(items);
   return (
-    <ScrollView style={{ flex: 1, marginBottom: 80 }}>
-      <View style={{ flex: 1 }}>
-        <Image
-          source={require('../images/banner.png')}
-          style={{
-            width: '94%',
-            height: 200,
-            borderRadius: 10,
-            alignSelf: 'center',
-            marginTop: 10
-          }} />
-        <View style={{ marginTop: 20 }}>
-          <FlatList
-            data={categoryList}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <TouchableOpacity style={{ padding: 10, borderWidth: 1, marginLeft: 20, borderRadius: 20 }}>
-                  <Text style={{ color: '#000' }}>{item}</Text>
-                </TouchableOpacity>
-              );
-            }}
-          />
-        </View>
-        <Text style={{ marginTop: 20, marginLeft: 20, color: '#000', fontSize: 16, fontWeight: '600' }}>New T-Shirt</Text>
-        <View style={{ marginTop: 20 }}>
-          <FlatList
-            data={tshirtList}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <ProductItem
-                  item={item}
-                  onAddWishlist={x => {
-                    dispatch(addToWishlist(x));
-                  }}
-                  onAddToCart={x => {
-                    dispatch(addItemToCart(item));
-                  }} />
-              );
-            }}
-          />
-        </View>
+    <>
+      <Search />
+      <ScrollView style={{ flex: 1, marginBottom: 80, marginTop: 15 }}>
+        <View style={{ flex: 1 }}>
+          <Image
+            source={require('../images/banner.png')}
+            style={{
+              width: '94%',
+              height: 200,
+              borderRadius: 10,
+              alignSelf: 'center',
+              marginTop: 10
+            }} />
+          <View style={{ marginTop: 20, backgroundColor: '#AA0000', height: 50 }}>
+            <FlatList
+              data={categoryList}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                return (
+                  <TouchableOpacity
+                    style={{ padding: 10, marginLeft: 20, borderRadius: 20, height: '80%', alignSelf: 'center', backgroundColor: '#fff' }}
+                    onPress={() => {
+                      goListCategory();
+                    }}
+                  >
+                    <Text style={{ color: '#000' }}>{item}</Text>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          </View>
 
-        <Text style={{ marginTop: 20, marginLeft: 20, color: '#000', fontSize: 16, fontWeight: '600' }}>New HeadWear</Text>
-        <View style={{ marginTop: 20 }}>
-          <FlatList
-            data={headwearList}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <ProductItem
-                  item={item}
-                  onAddWishlist={x => {
-                    dispatch(addToWishlist(x));
-                  }}
-                  onAddToCart={x => {
-                    dispatch(addItemToCart(item));
-                  }} />
-              );
-            }}
-          />
-        </View>
+          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New T-Shirt</Text>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <FlatList
+              data={tshirtList}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                return (
+                  <ProductItem
+                    item={item}
+                    onAddWishlist={x => {
+                      dispatch(addToWishlist(x));
+                    }}
+                    onAddToCart={x => {
+                      dispatch(addItemToCart(item));
+                    }} />
+                );
+              }}
+            />
+          </View>
 
-        <Text style={{ marginTop: 20, marginLeft: 20, color: '#000', fontSize: 16, fontWeight: '600' }}>New Hoodie</Text>
-        <View style={{ marginTop: 20 }}>
-          <FlatList
-            data={hoodieList}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <ProductItem
-                  item={item}
-                  onAddWishlist={x => {
-                    dispatch(addToWishlist(x));
-                  }}
-                  onAddToCart={x => {
-                    dispatch(addItemToCart(item));
-                  }} />
-              );
-            }}
-          />
-        </View>
+          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New HeadWear</Text>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <FlatList
+              data={headwearList}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                return (
+                  <ProductItem
+                    item={item}
+                    onAddWishlist={x => {
+                      dispatch(addToWishlist(x));
+                    }}
+                    onAddToCart={x => {
+                      dispatch(addItemToCart(item));
+                    }} />
+                );
+              }}
+            />
+          </View>
 
-        <Text style={{ marginTop: 20, marginLeft: 20, color: '#000', fontSize: 16, fontWeight: '600' }}>New Jacket</Text>
-        <View style={{ marginTop: 20 }}>
-          <FlatList
-            data={jacketList}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <ProductItem
-                  item={item}
-                  onAddWishlist={x => {
-                    dispatch(addToWishlist(x));
-                  }}
-                  onAddToCart={x => {
-                    dispatch(addItemToCart(item));
-                  }} />
-              );
-            }}
-          />
-        </View>
+          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New Hoodie</Text>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <FlatList
+              data={hoodieList}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                return (
+                  <ProductItem
+                    item={item}
+                    onAddWishlist={x => {
+                      dispatch(addToWishlist(x));
+                    }}
+                    onAddToCart={x => {
+                      dispatch(addItemToCart(item));
+                    }} />
+                );
+              }}
+            />
+          </View>
 
-        <Text style={{ marginTop: 20, marginLeft: 20, color: '#000', fontSize: 16, fontWeight: '600' }}>New Trousers & Shorts</Text>
-        <View style={{ marginTop: 20 }}>
-          <FlatList
-            data={trousersList}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <ProductItem
-                  item={item}
-                  onAddWishlist={x => {
-                    dispatch(addToWishlist(x));
-                  }}
-                  onAddToCart={x => {
-                    dispatch(addItemToCart(x));
-                  }} />
-              );
-            }}
-          />
+          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New Jacket</Text>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <FlatList
+              data={jacketList}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                return (
+                  <ProductItem
+                    item={item}
+                    onAddWishlist={x => {
+                      dispatch(addToWishlist(x));
+                    }}
+                    onAddToCart={x => {
+                      dispatch(addItemToCart(item));
+                    }} />
+                );
+              }}
+            />
+          </View>
+
+          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New Trousers & Shorts</Text>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <FlatList
+              data={trousersList}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                return (
+                  <ProductItem
+                    item={item}
+                    onAddWishlist={x => {
+                      dispatch(addToWishlist(x));
+                    }}
+                    onAddToCart={x => {
+                      dispatch(addItemToCart(x));
+                    }} />
+                );
+              }}
+            />
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 

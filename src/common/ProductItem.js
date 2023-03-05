@@ -41,14 +41,14 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                     style={{
                         marginTop: 10,
                         marginLeft: 10,
-                        fontSize: 18,
+                        fontSize: 12,
+                        color: 'black',
                         fontWeight: '600',
                     }}>
                     {item.name}
                 </Text>
                 <View
                     style={{
-                        flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         marginBottom: 10,
@@ -56,8 +56,8 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                     <Text
                         style={{
                             marginTop: 5,
-                            marginLeft: 10,
                             fontSize: 18,
+                            color: 'red',
                             fontWeight: '600',
                             marginBottom: 10,
                         }}>
@@ -70,7 +70,6 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 10,
-                            marginRight: 15,
                         }}
                         onPress={() => {
                             onAddToCart(item);
@@ -95,30 +94,31 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                         onAddWishlist(item);
                     }}>
                     <Image
-                        source={require('../images/heart.png')}
+                        source={require('../images/like.png')}
                         style={{ width: 24, height: 24 }}
                     />
                 </TouchableOpacity>
+
+                <ImageBackground
+                    source={require('../images/star.png')}
+                    style={{
+                        width: 40,
+                        height: 40,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        top: 10,
+                        left: 10,
+                    }}
+                >
+                    <Text style={{
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        fontSize: 14,
+                        color: 'red'
+                    }}>20</Text>
+                </ImageBackground>
             </View>
-            <ImageBackground
-                source={require('../images/star.png')}
-                style={{
-                    width: 40,
-                    height: 40,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    position: 'absolute',
-                    top: 10,
-                    left: 10,
-                }}
-            >
-                <Text style={{
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    fontSize: 14,
-                    color: 'red'
-                }}>20</Text>
-            </ImageBackground>
         </TouchableOpacity>
     );
 };

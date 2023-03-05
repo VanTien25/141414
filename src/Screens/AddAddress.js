@@ -58,6 +58,7 @@ const AddAddress = () => {
             />
             <CustomTextInput
                 placeholder={'Enter Pincode Name'}
+                pa
                 value={pin}
                 keyboardType={'number-pad'}
                 onChangeText={txt => {

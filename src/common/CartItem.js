@@ -134,7 +134,7 @@ const CartItem = ({
               onAddWishlist(item);
             }}>
             <Image
-              source={require('../images/heart.png')}
+              source={require('../images/like.png')}
               style={{ width: 24, height: 24 }}
             />
           </TouchableOpacity>

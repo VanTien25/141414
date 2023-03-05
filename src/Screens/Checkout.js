@@ -44,8 +44,8 @@ const Checkout = () => {
                                         style={{ width: 70, height: 70, marginLeft: 10 }}
                                     />
                                     <View style={{ padding: 10 }}>
-                                        <Text style={{ fontSize: 18 }}>{item.name}</Text>
-                                        <Text style={{ marginTop: 10 }}>{item.price + ' VND'}</Text>
+                                        <Text style={{ fontSize: 18, color: 'black' }}>{item.name}</Text>
+                                        <Text style={{ marginTop: 10, color: 'black' }}>{item.price + ' VND'}</Text>
                                     </View>
                                 </View>
                             );
@@ -60,14 +60,14 @@ const Checkout = () => {
                         paddingLeft: 20,
                         paddingRight: 20,
                         marginTop: 30,
-                        borderTopWidth: 0.5,
+                        borderTopWidth: 1,
                         height: 50,
                         borderTopColor: '#8e8e8e',
                     }}>
-                    <Text>Total :</Text>
-                    <Text>{getTotal() + ' VND'}</Text>
+                    <Text style={{ color: 'black' }}>Total :</Text>
+                    <Text style={{ color: 'black' }}>{getTotal() + ' VND'}</Text>
                 </View>
-                <View>
+                <View style={{ borderBottomWidth: 0.5}}>
                     <FlatList
                         data={addressList}
                         renderItem={({ item, index }) => {
@@ -85,11 +85,12 @@ const Checkout = () => {
                                         alignItems: 'center',
                                     }}>
                                     <View>
-                                        <Text style={{ marginLeft: 20 }}>{'City: ' + item.city}</Text>
-                                        <Text style={{ marginLeft: 20 }}>
+                                        <Text style={{ marginLeft: 20, color: 'black' }}>
+                                            {'City: ' + item.city}</Text>
+                                        <Text style={{ marginLeft: 20, color: 'black' }}>
                                             {'Building: ' + item.building}
                                         </Text>
-                                        <Text style={{ marginLeft: 20, marginBottom: 10 }}>
+                                        <Text style={{ marginLeft: 20, marginBottom: 10, color: 'black' }}>
                                             {'Pincode: ' + item.pincode}
                                         </Text>
                                     </View>
@@ -99,22 +100,21 @@ const Checkout = () => {
                                             setSelectedAddress(
                                                 'City :' +
                                                 item.city +
-                                                ' ' +
-                                                ',Building: ' +
+                                                ', Building: ' +
                                                 item.building +
-                                                ',Pincode: ' +
+                                                ', Pincode: ' +
                                                 item.pincode,
                                             );
                                         }}>
-                                        <Text>Select address</Text>
+                                        <Text style={{ color: 'black'}}>Select address</Text>
                                     </TouchableOpacity>
                                 </View>
                             );
                         }}
                     />
                 </View>
-                <Text style={{ margin: 20, fontSize: 18 }}>Select Address</Text>
-                <Text style={{ marginLeft: 20, fontSize: 16 }}>
+                <Text style={{ margin: 20, fontSize: 18, color: 'black' }}>Select Address</Text>
+                <Text style={{ marginLeft: 20, fontSize: 16, color: 'black' }}>
                     {selectedAddress == ''
                         ? 'Please Select Address From Above List'
                         : selectedAddress}

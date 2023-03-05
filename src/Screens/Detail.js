@@ -6,7 +6,7 @@ import CountQuantity from '../common/CountQuantity';
 import Size from '../common/Size';
 import CommonButton from '../common/CommonButton';
 
-const Detail = () => {
+const Detail = ({ onAddWishlist, item}) => {
   const navigation = useNavigation();
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -81,7 +81,7 @@ const Detail = () => {
           280.000 VND
         </Text>
 
-        <Size/>
+        <Size />
 
         <View style={{
           height: 60,
@@ -116,7 +116,7 @@ const Detail = () => {
           </Text>
         </View>
 
-        <View style={{ flex: 1, marginTop: 15, alignItems: 'center' }}>
+        <View style={{ flex: 1, marginTop: 15, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}>
           <TouchableOpacity
             style={{
               width: '80%',
@@ -128,6 +128,25 @@ const Detail = () => {
               alignItems: 'center'
             }}>
             <Text style={{ color: '#fff' }}>Add To Cart</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              width: 50,
+              elevation: 5,
+              height: 50,
+              backgroundColor: '#fff',
+              borderRadius: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              onAddWishlist(item);
+            }}>
+            <Image
+              source={require('../images/like.png')}
+              style={{ width: 24, height: 24 }}
+            />
           </TouchableOpacity>
         </View>
       </View>

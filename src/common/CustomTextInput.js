@@ -20,6 +20,7 @@ const CustomTextInput = ({ value, onChangeText, placeholder, icon, type, keyboar
                     onChangeText(txt);
                 }}
                 placeholder={placeholder}
+                placeholderTextColor={'black'}
                 secureTextEntry={type ? true : false}
                 style={{ marginLeft: 10, color: 'black' }}
             />

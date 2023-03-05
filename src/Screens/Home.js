@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Loader from '../common/Loader'
 import { TouchableOpacity } from 'react-native'
 import Main from '../bottom/Main'
-import Search from '../bottom/Search'
+import Star from '../bottom/Star'
 import Cart from '../bottom/Cart'
 import Wishlist from '../bottom/Wishlist'
 import Profile from '../bottom/Profile'
@@ -19,7 +19,7 @@ const Home = () => {
       {selectedTab == 0 ? (
         <Main />
       ) : selectedTab == 1 ? (
-        <Search />
+        <Star />
       ) : selectedTab == 2 ? (
         <Cart />
       ) : selectedTab == 3 ? (
@@ -32,7 +32,7 @@ const Home = () => {
         style={{
           width: '100%',
           height: 70,
-          backgroundColor: '#fff',
+          backgroundColor: '#AA0000',
           position: 'absolute',
           bottom: 0,
           flexDirection: 'row',
@@ -51,7 +51,7 @@ const Home = () => {
             style={{
               width: 24,
               height: 24,
-              tintColor: selectedTab == 0 ? '#000' : '#8e8e8e'
+              tintColor: selectedTab == 0 ? '#FFFF00' : '#fff'
             }} />
         </TouchableOpacity>
 
@@ -64,11 +64,11 @@ const Home = () => {
           setSelectedTab(1);
         }}>
           <Image
-            source={require('../images/loupe.png')}
+            source={require('../images/shopstar.png')}
             style={{
               width: 24,
               height: 24,
-              tintColor: selectedTab == 1 ? '#000' : '#8e8e8e'
+              tintColor: selectedTab == 1 ? '#FFFF00' : '#fff'
             }} />
         </TouchableOpacity>
 
@@ -118,7 +118,7 @@ const Home = () => {
             style={{
               width: 24,
               height: 24,
-              tintColor: selectedTab == 3 ? '#000' : '#8e8e8e'
+              tintColor: selectedTab == 3 ? '#FFFF00' : '#fff'
             }} />
           <View style={{
             width: 20,
@@ -150,7 +150,7 @@ const Home = () => {
             style={{
               width: 24,
               height: 24,
-              tintColor: selectedTab == 4 ? '#000' : '#8e8e8e'
+              tintColor: selectedTab == 4 ? '#FFFF00' : '#fff'
             }} />
         </TouchableOpacity>
       </View>

@@ -20,8 +20,9 @@ const Profile = () => {
           justifyContent: 'space-between',
           flexDirection: 'row',
           alignItems: 'center',
+          backgroundColor: '#AA0000'
         }}>
-        <Text style={{ fontWeight: '600', fontSize: 18, marginLeft: 15 }}>
+        <Text style={{ fontWeight: '600', fontSize: 18, marginLeft: 15, color: 'yellow'  }}>
           Profile
         </Text>
         <TouchableOpacity
@@ -34,7 +35,7 @@ const Profile = () => {
           }}>
           <Image
             source={require('../images/setting.png')}
-            style={{ width: 24, height: 24 }}
+            style={{ width: 24, height: 24, tintColor: 'yellow' }}
           />
         </TouchableOpacity>
       </View>
@@ -42,7 +43,7 @@ const Profile = () => {
         source={require('../images/profile.png')}
         style={{ width: 80, height: 80, alignSelf: 'center', marginTop: 30 }}
       />
-      <Text style={{ alignSelf: 'center', marginTop: 20, fontSize: 18 }}>
+      <Text style={{ alignSelf: 'center', marginTop: 20, fontSize: 18, color: 'black' }}>
         {name}
       </Text>
       <TouchableOpacity
@@ -58,7 +59,7 @@ const Profile = () => {
         onPress={() => {
           navigation.navigate('MyAddress');
         }}>
-        <Text style={{}}>My Address</Text>
+        <Text style={{ color: 'black'}}>My Address</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{
@@ -72,7 +73,7 @@ const Profile = () => {
         onPress={() => {
           navigation.navigate('Orders');
         }}>
-        <Text style={{}}>My Orders</Text>
+        <Text style={{ color: 'black'}}>My Orders</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{
@@ -83,7 +84,7 @@ const Profile = () => {
           borderBottomColor: '#8e8e8e',
           justifyContent: 'center',
         }}>
-        <Text style={{}}>Offers</Text>
+        <Text style={{ color: 'black'}}>Offers</Text>
       </TouchableOpacity>
     </View>
   );
