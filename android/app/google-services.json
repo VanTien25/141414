@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "432492163586",
+    "project_id": "manucian-cb212",
+    "storage_bucket": "manucian-cb212.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432492163586:android:76ee7df27ecb0a7b9b6d1b",
+        "android_client_info": {
+          "package_name": "com.manucian"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432492163586-4fhm8qvhdjno93jn39itlq91k05csdc6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manucian",
+            "certificate_hash": "a2eb051baeee7476d9434c91651eb2694f4217b6"
+          }
+        },
+        {
+          "client_id": "432492163586-v49595s13ncfuh6llbin63gsr95nnpop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5rrO-mNPrVqp2UjAXVn72CPUD1fGQ5xU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432492163586-v49595s13ncfuh6llbin63gsr95nnpop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

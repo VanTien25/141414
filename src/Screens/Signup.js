@@ -1,11 +1,12 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 
 import CustomTextInput from '../common/CustomTextInput'
 import CommonButton from '../common/CommonButton'
 import { useNavigation } from '@react-navigation/native'
 import { ScrollView } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import database from '@react-native-firebase/database';
+import auth, { firebase } from '@react-native-firebase/auth';
 let isValid = true;
 
 const Signup = () => {
@@ -66,13 +67,41 @@ const Signup = () => {
         }
     };
 
-    const saveData = async () => {
-        await AsyncStorage.setItem('NAME', name);
-        await AsyncStorage.setItem('EMAIL', email);
-        await AsyncStorage.setItem('PHONE', phone);
-        await AsyncStorage.setItem('PASSWORD', password);
-        console.log(':yes');
-        navigation.goBack();
+    // Lưu Data vào firebase
+    const saveData = () => {
+        auth()
+            .createUserWithEmailAndPassword(email, password, name, phone)
+            .then(() => {
+                database().
+                    ref('Users/' + firebase.auth().currentUser.uid)
+                    .set({
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        password: password,
+                    })
+                    .then((error) => {
+                        if (error) {
+                            alert('Lỗi')
+                        } else {
+                            alert('Thành công');
+                            console.log(':yes');
+                            navigation.goBack();
+                        }
+                    });
+            })
+            .catch(error => {
+                if (error.code === 'auth/email-already-in-use') {
+                    setButtonDisabled(false);
+                    Alert.alert('Địa chỉ email đó đã được sử dụng!');
+                    
+                }
+
+                if (error.code === 'auth/invalid-email') {
+                    setButtonDisabled(false);
+                    Alert.alert('Địa chỉ email đó không hợp lệ!');
+                }
+            });
     };
 
     return (
@@ -191,4 +220,4 @@ const Signup = () => {
     )
 }
 
-export default Signup ;
+export default Signup;

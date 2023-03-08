@@ -1,11 +1,11 @@
-import { View, Text, Image, TextInput } from 'react-native'
+import { View, Text, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomTextInput from '../common/CustomTextInput'
 import CommonButton from '../common/CommonButton'
 import { useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Loader from '../common/Loader'
+import auth from '@react-native-firebase/auth';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -35,15 +35,15 @@ const Login = () => {
     }
   };
 
-  const getData = async () => {
-    const mEmail = await AsyncStorage.getItem('EMAIL');
-    const mPass = await AsyncStorage.getItem('PASSWORD');
-    if (email === mEmail && password === mPass) {
-      setModalVisible(false);
-      navigation.navigate('Home');
-    } else {
-      setModalVisible(false);
-    }
+  const getData = () => {
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        navigation.navigate('Home');
+      }).catch(() => {
+        setModalVisible(false);
+        Alert.alert('Dang nhap khong thanh cong!');
+      });
   };
 
 

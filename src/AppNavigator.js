@@ -16,6 +16,7 @@ import ForgotPass from './Screens/ForgotPass';
 import Code from './Screens/Code';
 import Detail from './Screens/Detail';
 import Category from './Screens/Category';
+import ProductsManager from './Screens/ProductsManager';
 
 const Stack = createStackNavigator();
 
@@ -82,6 +83,11 @@ const AppNavigator = () => {
                     options={{ headerShown: false }}
                     name="Category"
                     component={Category} />
+
+                <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="ProductsManager"
+                    component={ProductsManager} />
 
             </Stack.Navigator>
         </NavigationContainer>

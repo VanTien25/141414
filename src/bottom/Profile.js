@@ -1,15 +1,15 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React, { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { firebase } from '@react-native-firebase/auth';
 let name = '';
 const Profile = () => {
   const navigation = useNavigation();
   useEffect(() => {
     getData();
   }, []);
-  const getData = async () => {
-    name = await AsyncStorage.getItem('NAME');
+  const getData = () => {
+    name = firebase.auth().currentUser.email;
   };
   return (
     <View style={{ flex: 1 }}>
@@ -76,6 +76,9 @@ const Profile = () => {
         <Text style={{ color: 'black'}}>My Orders</Text>
       </TouchableOpacity>
       <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('ProductsManager')
+      }}
         style={{
           width: '90%',
           alignSelf: 'center',
@@ -84,7 +87,7 @@ const Profile = () => {
           borderBottomColor: '#8e8e8e',
           justifyContent: 'center',
         }}>
-        <Text style={{ color: 'black'}}>Offers</Text>
+        <Text style={{ color: 'black'}}>ProductsManager</Text>
       </TouchableOpacity>
     </View>
   );
