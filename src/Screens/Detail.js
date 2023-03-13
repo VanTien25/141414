@@ -6,13 +6,15 @@ import CountQuantity from '../common/CountQuantity';
 import Size from '../common/Size';
 import CommonButton from '../common/CommonButton';
 
-const Detail = ({ onAddWishlist, item}) => {
-  const navigation = useNavigation();
+const Detail = ({ route, navigation }) => {
+  // const {id, title, price, image, desc, star} = route.params;
+  console.log(route);
+  // const navigation = useNavigation();
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1, marginBottom: 20 }}>
         <Image
-          source={require('../images/Headwear.webp')}
+          source={route.params.image}
           style={{
             width: '100%',
             height: 250,
@@ -36,9 +38,10 @@ const Detail = ({ onAddWishlist, item}) => {
             top: 20,
             left: 20,
           }}
-          onPress={() => {
-            navigation.goBack();
-          }}>
+        onPress={() => {
+          navigation.goBack();
+        }}
+        >
           <Image
             source={require('../images/back.png')}
             style={{ width: 24, height: 24, }}
@@ -57,7 +60,7 @@ const Detail = ({ onAddWishlist, item}) => {
             alignItems: 'center'
           }}
         >
-          <Text style={{ fontWeight: 'bold' }}>20</Text>
+          <Text style={{ fontWeight: 'bold' }}>{route.params.star}</Text>
         </ImageBackground>
 
 
@@ -68,7 +71,7 @@ const Detail = ({ onAddWishlist, item}) => {
             textAlign: 'center',
             marginTop: 15,
           }}>
-          Headwear Man UTD
+          {route.params.title}
         </Text>
 
         <Text
@@ -78,7 +81,7 @@ const Detail = ({ onAddWishlist, item}) => {
             textAlign: 'center',
             marginTop: 15,
           }}>
-          280.000 VND
+          {route.params.price}
         </Text>
 
         <Size />
@@ -102,7 +105,7 @@ const Detail = ({ onAddWishlist, item}) => {
               fontSize: 20,
               color: 'black',
               margin: 15
-            }}>Description</Text>
+            }}>Mô tả</Text>
           <Text
             style={{
               fontSize: 14,
@@ -110,9 +113,7 @@ const Detail = ({ onAddWishlist, item}) => {
               margin: 15
             }}
           >
-            A foundational component for inputting text into the app via a keyboard.
-            Props provide configurability for several features, such as auto-correction, auto-capitalization,
-            placeholder text, and different keyboard types, such as a numeric keypad.
+            {route.params.desc}
           </Text>
         </View>
 

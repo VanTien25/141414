@@ -17,6 +17,7 @@ import Code from './Screens/Code';
 import Detail from './Screens/Detail';
 import Category from './Screens/Category';
 import ProductsManager from './Screens/ProductsManager';
+import CategoriesMan from './Screens/CategoriesMan';
 
 const Stack = createStackNavigator();
 
@@ -25,22 +26,22 @@ const AppNavigator = () => {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen
-                    options={{ headerShow: false }}
+                    options={{ headerShown: false }}
                     name="Splash"
                     component={Splash} />
 
                 <Stack.Screen
-                    options={{ headerShow: false }}
+                    options={{ headerShown: false }}
                     name="Login"
                     component={Login} />
 
                 <Stack.Screen
-                    options={{ headerShow: false }}
+                    options={{ headerShown: false }}
                     name="Signup"
                     component={Signup} />
 
                 <Stack.Screen
-                    options={{ headerShow: false }}
+                    options={{ headerShown: false }}
                     name="Home"
                     component={Home} />
 
@@ -88,6 +89,11 @@ const AppNavigator = () => {
                     options={{ headerShown: false }}
                     name="ProductsManager"
                     component={ProductsManager} />
+
+                <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="CategoriesMan"
+                    component={CategoriesMan} />
 
             </Stack.Navigator>
         </NavigationContainer>

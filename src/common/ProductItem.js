@@ -7,14 +7,20 @@ import { useNavigation } from '@react-navigation/native';
 
 const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
     const navigation = useNavigation();
-    const goDetail = () => {
-        navigation.navigate('Detail');
-    };
 
     return (
         <TouchableOpacity
             onPress={() => {
-                goDetail();
+                navigation.navigate('Detail', 
+                {
+                    id: item.id,
+                    title: item.title,
+                    image: item.image,
+                    price: item.price,
+                    size: item.size,
+                    star: item.star,
+                    desc: item.desc,
+                })
             }}
             style={{
                 borderRadius: 20,
@@ -45,7 +51,7 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                         color: 'black',
                         fontWeight: '600',
                     }}>
-                    {item.name}
+                    {item.title}
                 </Text>
                 <View
                     style={{
@@ -116,7 +122,7 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                         fontWeight: 'bold',
                         fontSize: 14,
                         color: 'red'
-                    }}>20</Text>
+                    }}>{item.star}</Text>
                 </ImageBackground>
             </View>
         </TouchableOpacity>

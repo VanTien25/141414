@@ -1,0 +1,525 @@
+{
+    "Products": [
+        {
+            "category": "T-Shirt",
+            "data": [
+                {
+                    "id": 1,
+                    "title": "T-Shirt Short Red",
+                    "price": "80000",
+                    "image": "require('./images/Tshirt.jpg')",
+                    "star": "20",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 3,
+                            "name": "L"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "title": "T-Shirt Short Green",
+                    "price": "80000",
+                    "image": "require('./images/Tshirt1.webp')",
+                    "star": "20",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "T-Shirt Short White",
+                    "price": "85000",
+                    "image": "require('./images/Tshirt2.webp')",
+                    "star": "20",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": "T-Shirt Long Blue",
+                    "price": "90000",
+                    "image": "require('./images/Tshirt3.webp')",
+                    "star": "25",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 3,
+                            "name": "L"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "title": "T-Shirt Long Red",
+                    "price": "95000",
+                    "image": "require('./images/Tshirt4.jpg')",
+                    "star": "30",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 3,
+                            "name": "L"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "title": "T-Shirt Long Green",
+                    "price": "95000",
+                    "image": "require('./images/Tshirt5.webp')",
+                    "star": "30",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Headwear",
+            "data": [
+                {
+                    "id": 1,
+                    "title": "Hat Yellow",
+                    "price": "50000",
+                    "image": "require('./images/Headwear.webp')",
+                    "star": "15",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "title": "Hat Red",
+                    "price": "60000",
+                    "image": "require('./images/Headwear1.jpg')",
+                    "star": "15",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "Hat Black",
+                    "price": "50000",
+                    "image": "require('./images/Headwear2.webp')",
+                    "star": "15",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": "Hat Blue Light",
+                    "price": "55000",
+                    "image": "require('./images/Headwear4.webp')",
+                    "star": "15",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Hoodie",
+            "data": [
+                {
+                    "id": 1,
+                    "title": "Hoodies Gey",
+                    "price": "240000",
+                    "image": "require('./images/Hoodie.webp')",
+                    "star": "40",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "title": "Hoodies Black",
+                    "price": "60000",
+                    "image": "require('./images/Hoodie1.webp')",
+                    "star": "15",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "Hoodies White",
+                    "price": "260000",
+                    "image": "require('./images/Hoodie2.webp')",
+                    "star": "50",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": "Hoodies Black x Blue",
+                    "price": "250000",
+                    "image": "require('./images/Hoodie3.webp')",
+                    "star": "45",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "title": "Hoodies Grey II",
+                    "price": "255000",
+                    "image": "require('./images/Hoodie4.webp')",
+                    "star": "45",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 3,
+                            "name": "L"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Jacket",
+            "data": [
+                {
+                    "id": 1,
+                    "title": "Jacket Black",
+                    "price": "320000",
+                    "image": "require('./images/Jacket.webp')",
+                    "star": "55",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 3,
+                            "name": "L"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "title": "Jacket Blue",
+                    "price": "280000",
+                    "image": "require('./images/Jacket1.webp')",
+                    "star": "50",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "Jacket Black II",
+                    "price": "300000",
+                    "image": "require('./images/Jacket2.webp')",
+                    "star": "65",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": "Jacket White",
+                    "price": "330000",
+                    "image": "require('./images/Jacket5.webp')",
+                    "star": "70",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Trousers",
+            "data": [
+                {
+                    "id": 1,
+                    "title": "Short Black x Greenlight",
+                    "price": "80000",
+                    "image": "require('./images/Short.webp')",
+                    "star": "15",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 3,
+                            "name": "L"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "title": "Short Blue",
+                    "price": "85000",
+                    "image": "require('./images/Short1.webp')",
+                    "star": "15",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 3,
+                            "name": "L"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "Short Grey",
+                    "price": "90000",
+                    "image": "require('./images/Short2.webp')",
+                    "star": "20",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": "Trousers Blue",
+                    "price": "140000",
+                    "image": "require('./images/Short3.webp')",
+                    "star": "30",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "title": "Trousers Black",
+                    "price": "130000",
+                    "image": "require('./images/Short4.webp')",
+                    "star": "20",
+                    "desc": "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
+                    "size": [
+                        {
+                            "id": 1,
+                            "name": "S"
+                        },
+                        {
+                            "id": 2,
+                            "name": "M"
+                        },
+                        {
+                            "id": 4,
+                            "name": "XL"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -17,9 +17,10 @@ const ProductsManager = () => {
 
     const addProduct = () => {
         database()
-            .ref('Products/' + category)
+            .ref('Products/')
             .push()
             .set({
+                category,
                 title,
                 price,
                 size,

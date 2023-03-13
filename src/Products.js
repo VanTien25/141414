@@ -98,7 +98,7 @@ export const products = {
                   image: require('./images/Hoodie3.webp'),
               },
               {
-                  name: 'Hoodies 5',
+                  name: 'Hoodies Grey II',
                   price: 1000,
                   size: 'S',
                   image: require('./images/Hoodie4.webp'),

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, addToWishlist } from '../redux/actions/Actions';
 import Search from '../common/Search';
 import Category from '../Screens/Category';
+import database from '@react-native-firebase/database';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,31 +20,65 @@ const Main = () => {
   const [hoodieList, setHoodieList] = useState([]);
   const [jacketList, setJacketList] = useState([]);
   const [trousersList, setTrousersList] = useState([]);
+  const [data, setData] = useState([]);
+
 
   const navigation = useNavigation();
   const goListCategory = () => {
     navigation.navigate('Category')
   }
+
   useEffect(() => {
-    let categories = [];
-    products.category.map(item => {
-      categories.push(item.category);
+    database().ref('Products/').on('value', (snapshot) => {
+      let productList = [];
+      let catList = [];
+      let test = [];
+      snapshot.forEach(childSnapshot => {
+        var childData = childSnapshot.val();
+        catList.push(
+          childData.category,
+        );
+        productList.push(
+          childData,
+        );
+        test.push(
+          childData.data
+        )
+      });
+      setCategoryList(catList);
+      setTshirtList(productList[0].data);
+      setHeadwearList(productList[1].data);
+      setHoodieList(productList[2].data);
+      setJacketList(productList[3].data);
+      setTrousersList(productList[4].data);
+      setData(productList.data);
+      console.log(JSON.stringify(productList[0].data));
+      console.log(test);
     });
-    setTshirtList(products.category[0].data);
-    setHeadwearList(products.category[1].data);
-    setHoodieList(products.category[2].data);
-    setJacketList(products.category[3].data);
-    setTrousersList(products.category[4].data);
-    setCategoryList(categories);
-    console.log(JSON.stringify(products.category[0]));
-  }, []);
+  }, [])
+
+
+  // useEffect(() => {
+  //   let categories = [];
+  //   products.category.map(item => {
+  //     categories.push(item.category);
+  //   });
+  //   setTshirtList(products.category[0].data);
+  //   setHeadwearList(products.category[1].data);
+  //   setHoodieList(products.category[2].data);
+  //   setJacketList(products.category[3].data);
+  //   setTrousersList(products.category[4].data);
+  //   setCategoryList(categories);
+  //   console.log(categories);
+  //   // console.log(JSON.stringify(products.category[0]));
+  // }, []);
 
   // const items = useSelector(state => state);
   // console.log(items);
   return (
     <>
       <Search />
-      <ScrollView style={{ flex: 1, marginBottom: 80, marginTop: 15 }}>
+      <ScrollView style={{ flex: 1, marginTop: 15, marginBottom: 60 }}>
         <View style={{ flex: 1 }}>
           <Image
             source={require('../images/banner.png')}
