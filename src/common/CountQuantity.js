@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native'
 import React, { useState } from 'react'
 
 const CountQuantity = () => {
@@ -6,28 +6,34 @@ const CountQuantity = () => {
 
     return (
         <View style={{
-            width: 130, height: 50,
-            flexDirection: 'row', backgroundColor: '#BB0000',
+            width: 130, height: 40, borderRadius: 5,
+            flexDirection: 'row', padding: 10, borderWidth: 1,
             justifyContent: 'center', alignItems: 'center',
-            borderRadius: 10
         }}>
             <TouchableOpacity
+                onPress={() => {
+                    subtraction();
+                }}
                 style={{
-                    width: 40,
+                    width: 35,
                     justifyContent: 'center',
                     alignItems: 'center',
 
                 }}>
-                <Text style={{ fontSize: 35, fontWeight: '900', color: '#fff' }}>-</Text>
+                <Image
+                    source={require('../images/sub.png')}
+                    style={{ width: 26, height: 26 }} />
             </TouchableOpacity>
             <TextInput
+                onChangeText={onChangeNumber}
+                value={number}
                 style={{
-                    width: 50,
-                    height: 45,
+                    width: 60,
+                    height: 40,
+                    borderWidth: 1,
                     textAlign: 'center',
                     justifyContent: 'center',
                     alignSelf: 'center',
-                    borderRadius: 10,
                     backgroundColor: '#fff',
                     fontSize: 18,
                     fontWeight: 'bold',
@@ -36,12 +42,17 @@ const CountQuantity = () => {
                 placeholder='1'
                 keyboardType="numeric" />
             <TouchableOpacity
+                onPress={() => {
+                    addition();
+                }}
                 style={{
-                    width: 40,
+                    width: 35,
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                <Text style={{ fontSize: 25, fontWeight: '900', color: '#fff' }}>+</Text>
+                <Image
+                    source={require('../images/add.png')}
+                    style={{ width: 26, height: 26 }} />
             </TouchableOpacity>
         </View>
     )

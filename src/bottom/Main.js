@@ -52,29 +52,9 @@ const Main = () => {
       setJacketList(productList[3].data);
       setTrousersList(productList[4].data);
       setData(productList.data);
-      console.log(JSON.stringify(productList[0].data));
-      console.log(test);
     });
   }, [])
 
-
-  // useEffect(() => {
-  //   let categories = [];
-  //   products.category.map(item => {
-  //     categories.push(item.category);
-  //   });
-  //   setTshirtList(products.category[0].data);
-  //   setHeadwearList(products.category[1].data);
-  //   setHoodieList(products.category[2].data);
-  //   setJacketList(products.category[3].data);
-  //   setTrousersList(products.category[4].data);
-  //   setCategoryList(categories);
-  //   console.log(categories);
-  //   // console.log(JSON.stringify(products.category[0]));
-  // }, []);
-
-  // const items = useSelector(state => state);
-  // console.log(items);
   return (
     <>
       <Search />

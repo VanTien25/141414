@@ -1,18 +1,27 @@
 import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, ImageBackground, Image, TextInput } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useNavigation } from '@react-navigation/native'
 import CountQuantity from '../common/CountQuantity';
 import Size from '../common/Size';
 import CommonButton from '../common/CommonButton';
+import AddDetail from '../common/AddDetail';
 
 const Detail = ({ route, navigation }) => {
-  // const {id, title, price, image, desc, star} = route.params;
-  console.log(route);
-  // const navigation = useNavigation();
+  let [quantity, setQuantity] = useState(1);
+
+  const subtraction = () => {
+    setQuantity(quantity -1);
+  }
+
+  const addition = () => {
+    setQuantity(quantity +1);
+  }
+
+
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{ flex: 1, marginBottom: 20 }}>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, marginBottom: 100 }}>
         <Image
           source={route.params.image}
           style={{
@@ -38,9 +47,9 @@ const Detail = ({ route, navigation }) => {
             top: 20,
             left: 20,
           }}
-        onPress={() => {
-          navigation.goBack();
-        }}
+          onPress={() => {
+            navigation.goBack();
+          }}
         >
           <Image
             source={require('../images/back.png')}
@@ -63,43 +72,96 @@ const Detail = ({ route, navigation }) => {
           <Text style={{ fontWeight: 'bold' }}>{route.params.star}</Text>
         </ImageBackground>
 
-
+        {/* Title */}
         <Text
           style={{
             fontSize: 20,
             color: 'black',
-            textAlign: 'center',
+            marginLeft: 15,
+            textAlign: 'left',
             marginTop: 15,
           }}>
           {route.params.title}
         </Text>
 
+        <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 10, marginBottom: 10 }} />
+
+        {/* Price */}
         <Text
           style={{
             fontSize: 20,
-            color: 'black',
-            textAlign: 'center',
-            marginTop: 15,
+            fontWeight: 'bold',
+            marginLeft: 15,
+            color: 'red',
+            textAlign: 'left',
           }}>
-          {route.params.price}
+          {route.params.price} VNĐ
         </Text>
+
+        <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 10, marginBottom: 10 }} />
 
         <Size />
 
+        <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 5, marginBottom: 10 }} />
+
+        {/* Quantity */}
         <View style={{
           height: 60,
-          backgroundColor: '#fff',
-          marginTop: 15,
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: 10
+          padding: 15
         }}>
           <Text style={{ fontSize: 20, color: 'black' }}>Số Lượng: </Text>
-          <CountQuantity />
+          <View style={{
+            width: 130, height: 40, borderRadius: 5,
+            flexDirection: 'row', padding: 10, borderWidth: 1,
+            justifyContent: 'center', alignItems: 'center',
+          }}>
+            <TouchableOpacity
+              onPress={() => {
+                subtraction();
+              }}
+              style={{
+                width: 35,
+                justifyContent: 'center',
+                alignItems: 'center',
+
+              }}>
+              <Image
+                source={require('../images/sub.png')}
+                style={{ width: 26, height: 26 }} />
+            </TouchableOpacity>
+            <View style={{
+              width: 60,
+              height: 40,
+              borderWidth: 1,
+              textAlign: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#fff',
+            }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center'}}>{quantity}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                addition();
+              }}
+              style={{
+                width: 35,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Image
+                source={require('../images/add.png')}
+                style={{ width: 26, height: 26 }} />
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={{ flex: 1, marginTop: 15, backgroundColor: '#fff', padding: 10 }}>
+        <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 5, marginBottom: 10 }} />
+
+        {/* Desc */}
+        <View style={{ flex: 1 }}>
           <Text
             style={{
               fontSize: 20,
@@ -116,42 +178,9 @@ const Detail = ({ route, navigation }) => {
             {route.params.desc}
           </Text>
         </View>
-
-        <View style={{ flex: 1, marginTop: 15, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}>
-          <TouchableOpacity
-            style={{
-              width: '80%',
-              height: 50,
-              borderWidth: 1,
-              borderRadius: 10,
-              backgroundColor: 'black',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <Text style={{ color: '#fff' }}>Add To Cart</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              width: 50,
-              elevation: 5,
-              height: 50,
-              backgroundColor: '#fff',
-              borderRadius: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => {
-              onAddWishlist(item);
-            }}>
-            <Image
-              source={require('../images/like.png')}
-              style={{ width: 24, height: 24 }}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <AddDetail />
+    </View>
   )
 }
 

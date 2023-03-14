@@ -6,14 +6,13 @@ const Size = () => {
   return (
     <View style={{
       height: 60, flexDirection: 'row', justifyContent: 'space-between',
-      alignItems: 'center', padding: 10, backgroundColor: '#fff', borderRadius: 5,
-      marginTop: 15
+      alignItems: 'center', padding: 15
     }}>
       <Text style={{ fontSize: 20, color: 'black' }}>Size: </Text>
       <TouchableOpacity
         style={{
-          width: 70,
-          height: 50,
+          width: 60,
+          height: 40,
           borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
@@ -25,8 +24,8 @@ const Size = () => {
 
       <TouchableOpacity
         style={{
-          width: 70,
-          height: 50,
+          width: 60,
+          height: 40,
           borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
@@ -38,8 +37,8 @@ const Size = () => {
 
       <TouchableOpacity
         style={{
-          width: 70,
-          height: 50,
+          width: 60,
+          height: 40,
           borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
@@ -51,8 +50,8 @@ const Size = () => {
 
       <TouchableOpacity
         style={{
-          width: 70,
-          height: 50,
+          width: 60,
+          height: 40,
           borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
