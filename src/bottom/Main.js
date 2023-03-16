@@ -1,13 +1,9 @@
 import { View, Text, Image, FlatList, TouchableOpacity, ScrollView, StatusBar, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
-
-import Header from '../common/Header'
-import { products } from '../Products'
 import ProductItem from '../common/ProductItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, addToWishlist } from '../redux/actions/Actions';
 import Search from '../common/Search';
-import Category from '../Screens/Category';
 import database from '@react-native-firebase/database';
 
 import { useNavigation } from '@react-navigation/native';
@@ -20,13 +16,9 @@ const Main = () => {
   const [hoodieList, setHoodieList] = useState([]);
   const [jacketList, setJacketList] = useState([]);
   const [trousersList, setTrousersList] = useState([]);
-  const [data, setData] = useState([]);
 
 
   const navigation = useNavigation();
-  const goListCategory = () => {
-    navigation.navigate('Category')
-  }
 
   useEffect(() => {
     database().ref('Products/').on('value', (snapshot) => {
@@ -51,14 +43,13 @@ const Main = () => {
       setHoodieList(productList[2].data);
       setJacketList(productList[3].data);
       setTrousersList(productList[4].data);
-      setData(productList.data);
     });
   }, [])
 
   return (
     <>
       <Search />
-      <ScrollView style={{ flex: 1, marginTop: 15, marginBottom: 60 }}>
+      <ScrollView style={{ flex: 1, marginTop: 15 }}>
         <View style={{ flex: 1 }}>
           <Image
             source={require('../images/banner.png')}
@@ -79,7 +70,36 @@ const Main = () => {
                   <TouchableOpacity
                     style={{ padding: 10, marginLeft: 20, borderRadius: 20, height: '80%', alignSelf: 'center', backgroundColor: '#fff' }}
                     onPress={() => {
-                      goListCategory();
+                      if (item === "T-Shirt") {
+                        navigation.navigate('Category', {
+                          item,
+                          list : tshirtList,
+                        });
+                      }
+                      if (item === "Headwear") {
+                        navigation.navigate('Category', {
+                          item,
+                          list : headwearList,
+                        });
+                      }
+                      if (item === "Hoodie") {
+                        navigation.navigate('Category', {
+                          item,
+                          list : hoodieList,
+                        });
+                      }
+                      if (item === "Jacket") {
+                        navigation.navigate('Category', {
+                          item,
+                          list : jacketList,
+                        });
+                      }
+                      if (item === "Trousers") {
+                        navigation.navigate('Category', {
+                          item,
+                          list : trousersList,
+                        });
+                      }
                     }}
                   >
                     <Text style={{ color: '#000' }}>{item}</Text>
@@ -101,12 +121,7 @@ const Main = () => {
                 return (
                   <ProductItem
                     item={item}
-                    onAddWishlist={x => {
-                      dispatch(addToWishlist(x));
-                    }}
-                    onAddToCart={x => {
-                      dispatch(addItemToCart(item));
-                    }} />
+                  />
                 );
               }}
             />

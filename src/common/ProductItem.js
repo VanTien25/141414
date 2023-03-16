@@ -5,22 +5,22 @@ import { TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
+const ProductItem = ({ item}) => {
     const navigation = useNavigation();
 
     return (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate('Detail', 
-                {
-                    id: item.id,
-                    title: item.title,
-                    image: item.image,
-                    price: item.price,
-                    size: item.size,
-                    star: item.star,
-                    desc: item.desc,
-                })
+                navigation.navigate('Detail',
+                    {
+                        id: item.id,
+                        title: item.title,
+                        image: item.image,
+                        price: item.price,
+                        size: item.size,
+                        star: item.star,
+                        desc: item.desc,
+                    })
             }}
             style={{
                 borderRadius: 20,
@@ -51,7 +51,11 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                         color: 'black',
                         fontWeight: '600',
                     }}>
-                    {item.title}
+                    {
+                        item.title.length > 20
+                            ? item.title.substring(0, 20) + '...'
+                            : item.title
+                    }
                 </Text>
                 <View
                     style={{
@@ -69,19 +73,6 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                         }}>
                         {item.price + ' VND'}
                     </Text>
-                    <TouchableOpacity
-                        style={{
-                            borderWidth: 1,
-                            padding: 5,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 10,
-                        }}
-                        onPress={() => {
-                            onAddToCart(item);
-                        }}>
-                        <Text style={{ color: '#000' }}>Add to Cart</Text>
-                    </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                     style={{
@@ -95,9 +86,6 @@ const ProductItem = ({ item, onAddToCart, onAddWishlist }) => {
                         position: 'absolute',
                         top: 10,
                         right: 10,
-                    }}
-                    onPress={() => {
-                        onAddWishlist(item);
                     }}>
                     <Image
                         source={require('../images/like.png')}

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, ImageBackground, Image, TextInput } from 'react-native'
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, ImageBackground, Image, TextInput, FlatList } from 'react-native'
 import React, { useState } from 'react'
 
 import { useNavigation } from '@react-navigation/native'
@@ -9,19 +9,20 @@ import AddDetail from '../common/AddDetail';
 
 const Detail = ({ route, navigation }) => {
   let [quantity, setQuantity] = useState(1);
+  const [buttonDisable, setButtonDisable] = useState(false);
 
   const subtraction = () => {
-    setQuantity(quantity -1);
+    setQuantity(quantity - 1);
   }
 
   const addition = () => {
-    setQuantity(quantity +1);
+    setQuantity(quantity + 1);
   }
 
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1, marginBottom: 100 }}>
+      <ScrollView style={{ flex: 1 }}>
         <Image
           source={route.params.image}
           style={{
@@ -80,11 +81,11 @@ const Detail = ({ route, navigation }) => {
             marginLeft: 15,
             textAlign: 'left',
             marginTop: 15,
+            marginBottom: 15,
           }}>
           {route.params.title}
         </Text>
 
-        <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 10, marginBottom: 10 }} />
 
         {/* Price */}
         <Text
@@ -98,9 +99,39 @@ const Detail = ({ route, navigation }) => {
           {route.params.price} VNĐ
         </Text>
 
-        <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 10, marginBottom: 10 }} />
+        <View style={{ height: 1, borderWidth: 0.65, borderColor: '#BBBBBB', marginTop: 10, marginBottom: 10 }} />
 
-        <Size />
+        {/* Size */}
+        <View style={{
+          height: 80, flexDirection: 'row', justifyContent: 'space-between',
+          alignItems: 'center', padding: 15
+        }}>
+          <Text style={{ fontSize: 20, color: 'black' }}>Size: </Text>
+          <FlatList
+            data={route.params.size}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  style={{
+                    width: 60,
+                    height: 40,
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    marginLeft: 15,
+                    backgroundColor: '#BB0000'
+                  }}
+                >
+                  <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
+                </TouchableOpacity>
+              );
+            }}
+          />
+
+        </View>
 
         <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 5, marginBottom: 10 }} />
 
@@ -118,20 +149,38 @@ const Detail = ({ route, navigation }) => {
             flexDirection: 'row', padding: 10, borderWidth: 1,
             justifyContent: 'center', alignItems: 'center',
           }}>
-            <TouchableOpacity
-              onPress={() => {
-                subtraction();
-              }}
-              style={{
-                width: 35,
-                justifyContent: 'center',
-                alignItems: 'center',
+            {
+              quantity <= 1 ? (
+                <View
+                  onPress={() => {
+                    subtraction();
+                  }}
+                  style={{
+                    width: 35,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={require('../images/sub.png')}
+                    style={{ width: 26, height: 26, tintColor: 'grey' }} />
+                </View>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    subtraction();
+                  }}
+                  style={{
+                    width: 35,
+                    justifyContent: 'center',
+                    alignItems: 'center',
 
-              }}>
-              <Image
-                source={require('../images/sub.png')}
-                style={{ width: 26, height: 26 }} />
-            </TouchableOpacity>
+                  }}>
+                  <Image
+                    source={require('../images/sub.png')}
+                    style={{ width: 26, height: 26 }} />
+                </TouchableOpacity>
+              )
+            }
             <View style={{
               width: 60,
               height: 40,
@@ -140,7 +189,7 @@ const Detail = ({ route, navigation }) => {
               justifyContent: 'center',
               backgroundColor: '#fff',
             }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center'}}>{quantity}</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>{quantity}</Text>
             </View>
             <TouchableOpacity
               onPress={() => {
@@ -161,7 +210,7 @@ const Detail = ({ route, navigation }) => {
         <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 5, marginBottom: 10 }} />
 
         {/* Desc */}
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginBottom: 60 }}>
           <Text
             style={{
               fontSize: 20,
@@ -170,7 +219,7 @@ const Detail = ({ route, navigation }) => {
             }}>Mô tả</Text>
           <Text
             style={{
-              fontSize: 14,
+              fontSize: 16,
               color: 'black',
               margin: 15
             }}
@@ -178,8 +227,51 @@ const Detail = ({ route, navigation }) => {
             {route.params.desc}
           </Text>
         </View>
+
       </ScrollView>
-      <AddDetail />
+
+      {/* Button Add Detail */}
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          alignItems: 'center',
+          height: 50,
+          flexDirection: 'row',
+          backgroundColor: '#fff',
+          elevation: 5,
+        }}>
+        <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Cart')
+        }}
+          style={{
+            width: '75%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#AA0000'
+          }}>
+          <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>Thêm vào giỏ hàng</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            width: '25%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#fff',
+          }}>
+          <Image
+            source={require('../images/like.png')}
+            style={{
+              width: 24,
+              height: 24,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
