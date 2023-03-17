@@ -1,15 +1,25 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
+
 let name = '';
 const Profile = () => {
   const navigation = useNavigation();
+
+  const logOut = () => {
+    auth()
+      .signOut()
+      .then(() => Alert.alert('Đăng xuất thành công'));
+  }
+
   useEffect(() => {
     getData();
   }, []);
   const getData = () => {
     name = firebase.auth().currentUser.email;
+    console.log(name);
   };
   return (
     <View style={{ flex: 1 }}>
@@ -22,10 +32,13 @@ const Profile = () => {
           alignItems: 'center',
           backgroundColor: '#AA0000'
         }}>
-        <Text style={{ fontWeight: '600', fontSize: 18, marginLeft: 15, color: 'yellow'  }}>
+        <Text style={{ fontWeight: '600', fontSize: 22, marginLeft: 15, color: 'yellow' }}>
           Profile
         </Text>
         <TouchableOpacity
+          onPress={() => {
+            logOut();
+          }}
           style={{
             width: 30,
             height: 30,
@@ -34,8 +47,8 @@ const Profile = () => {
             alignItems: 'center',
           }}>
           <Image
-            source={require('../images/setting.png')}
-            style={{ width: 24, height: 24, tintColor: 'yellow' }}
+            source={require('../images/logout.png')}
+            style={{ width: 30, height: 30, tintColor: 'yellow' }}
           />
         </TouchableOpacity>
       </View>
@@ -59,7 +72,7 @@ const Profile = () => {
         onPress={() => {
           navigation.navigate('MyAddress');
         }}>
-        <Text style={{ color: 'black'}}>My Address</Text>
+        <Text style={{ color: 'black' }}>My Address</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{
@@ -73,12 +86,12 @@ const Profile = () => {
         onPress={() => {
           navigation.navigate('Orders');
         }}>
-        <Text style={{ color: 'black'}}>My Orders</Text>
+        <Text style={{ color: 'black' }}>My Orders</Text>
       </TouchableOpacity>
       <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('ProductsManager')
-      }}
+        onPress={() => {
+          navigation.navigate('ProductsManager')
+        }}
         style={{
           width: '90%',
           alignSelf: 'center',
@@ -87,12 +100,12 @@ const Profile = () => {
           borderBottomColor: '#8e8e8e',
           justifyContent: 'center',
         }}>
-        <Text style={{ color: 'black'}}>ProductsManager</Text>
+        <Text style={{ color: 'black' }}>ProductsManager</Text>
       </TouchableOpacity>
       <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('CategoriesMan')
-      }}
+        onPress={() => {
+          navigation.navigate('CategoriesMan')
+        }}
         style={{
           width: '90%',
           alignSelf: 'center',
@@ -101,7 +114,7 @@ const Profile = () => {
           borderBottomColor: '#8e8e8e',
           justifyContent: 'center',
         }}>
-        <Text style={{ color: 'black'}}>CategoriesManager</Text>
+        <Text style={{ color: 'black' }}>CategoriesManager</Text>
       </TouchableOpacity>
     </View>
   );

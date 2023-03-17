@@ -1,15 +1,67 @@
 import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, ImageBackground, Image, TextInput, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useNavigation } from '@react-navigation/native'
 import CountQuantity from '../common/CountQuantity';
 import Size from '../common/Size';
 import CommonButton from '../common/CommonButton';
 import AddDetail from '../common/AddDetail';
+import { Alert } from 'react-native';
+import database, { firebase } from '@react-native-firebase/database';
 
 const Detail = ({ route, navigation }) => {
+  const [userId, setUserId] = useState(route.params.idUser);
+  const [listData, setData] = useState();
   let [quantity, setQuantity] = useState(1);
-  const [buttonDisable, setButtonDisable] = useState(false);
+  // const [idUser, setIdUser] = useState(route.params.idUser);
+  const [size, setSize] = useState('');
+
+  useEffect(() => {
+    getItem();
+  }, [])
+
+  const getItem = () => {
+    database()
+      .ref('Users/' + userId)
+      .on('value', snapshot => {
+        let listUser = [];
+        snapshot.forEach(childSnapshot => {
+          var childData = childSnapshot.val();
+          listUser.push(childData);
+          console.log(childData.cart);
+        });
+        
+      });
+  }
+
+  const handleAddToCart = () => {
+    database()
+      .ref('Users/' + userId)
+      .on('value', snapshot => {
+        const data = snapshot.val();
+        setData(data);
+      });
+    const user = data.cart;
+    console.log(user);
+
+    // database()
+    //   .ref('Users/' + idUser)
+    //   .update({
+    //     cart: [
+    //       {
+    //         idUser,
+    //         id: route.params.id,
+    //         title: route.params.title,
+    //         price: route.params.price,
+    //         size: size,
+    //         quantity: quantity,
+    //         star: route.params.star,
+
+    //       }
+    //     ]
+    //   })
+    //   .then(() => Alert.alert('Data updated.'));
+  }
 
   const subtraction = () => {
     setQuantity(quantity - 1);
@@ -19,6 +71,9 @@ const Detail = ({ route, navigation }) => {
     setQuantity(quantity + 1);
   }
 
+  const getSize = (item) => {
+    setSize(item.name);
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -114,6 +169,9 @@ const Detail = ({ route, navigation }) => {
             renderItem={({ item, index }) => {
               return (
                 <TouchableOpacity
+                  onPress={() => {
+                    getSize(item);
+                  }}
                   style={{
                     width: 60,
                     height: 40,
@@ -137,16 +195,16 @@ const Detail = ({ route, navigation }) => {
 
         {/* Quantity */}
         <View style={{
-          height: 60,
+          height: 80,
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: 15
+          padding: 15,
         }}>
           <Text style={{ fontSize: 20, color: 'black' }}>Số Lượng: </Text>
           <View style={{
-            width: 130, height: 40, borderRadius: 5,
-            flexDirection: 'row', padding: 10, borderWidth: 1,
+            width: 130, height: 40, borderRadius: 8,
+            flexDirection: 'row', padding: 10, borderWidth: 1.5,
             justifyContent: 'center', alignItems: 'center',
           }}>
             {
@@ -243,9 +301,9 @@ const Detail = ({ route, navigation }) => {
           elevation: 5,
         }}>
         <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Cart')
-        }}
+          onPress={() => {
+            handleAddToCart();
+          }}
           style={{
             width: '75%',
             height: '100%',

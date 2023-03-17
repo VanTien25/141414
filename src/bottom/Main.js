@@ -4,7 +4,8 @@ import ProductItem from '../common/ProductItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, addToWishlist } from '../redux/actions/Actions';
 import Search from '../common/Search';
-import database from '@react-native-firebase/database';
+import database, { firebase } from '@react-native-firebase/database';
+
 
 import { useNavigation } from '@react-navigation/native';
 

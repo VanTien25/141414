@@ -1,8 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { useState, useEffect } from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
+import database from '@react-native-firebase/database';
+import auth, { firebase } from '@react-native-firebase/auth';
 
 import Splash from './Screens/Splash';
 import Login from './Screens/Login';
@@ -22,9 +25,24 @@ import CategoriesMan from './Screens/CategoriesMan';
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator>
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
+
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+    }
+
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+    }, []);
+
+    if (initializing) return null;
+
+    if (!user) {
+        return (
+            <Stack.Navigator >
                 <Stack.Screen
                     options={{ headerShown: false }}
                     name="Splash"
@@ -39,65 +57,75 @@ const AppNavigator = () => {
                     options={{ headerShown: false }}
                     name="Signup"
                     component={Signup} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Home"
-                    component={Home} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="MyAddress"
-                    component={MyAddress} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="AddAddress"
-                    component={AddAddress} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Checkout"
-                    component={Checkout} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="OrderSuccess"
-                    component={OrderSucess} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="ForgotPass"
-                    component={ForgotPass} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Code"
-                    component={Code} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Detail"
-                    component={Detail} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Category"
-                    component={Category} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="ProductsManager"
-                    component={ProductsManager} />
-
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="CategoriesMan"
-                    component={CategoriesMan} />
-
             </Stack.Navigator>
-        </NavigationContainer>
+
+        );
+    }
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Home"
+                component={Home} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="MyAddress"
+                component={MyAddress} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="AddAddress"
+                component={AddAddress} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Checkout"
+                component={Checkout} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="OrderSuccess"
+                component={OrderSucess} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="ForgotPass"
+                component={ForgotPass} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Code"
+                component={Code} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Detail"
+                component={Detail} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Category"
+                component={Category} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="ProductsManager"
+                component={ProductsManager} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="CategoriesMan"
+                component={CategoriesMan} />
+
+        </Stack.Navigator>
     )
 }
 
-export default AppNavigator;
+export default () => {
+    return (
+        <NavigationContainer>
+            <AppNavigator />
+        </NavigationContainer>
+    )
+};

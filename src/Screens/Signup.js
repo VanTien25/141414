@@ -79,6 +79,7 @@ const Signup = () => {
                         email: email,
                         phone: phone,
                         password: password,
+                        cart: [],
                     })
                     .then((error) => {
                         if (error) {

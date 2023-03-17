@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Loader from '../common/Loader'
 import { TouchableOpacity } from 'react-native'
 import Main from '../bottom/Main'
@@ -11,12 +11,9 @@ import { useSelector } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Header } from '@react-navigation/stack'
+import { firebase } from '@react-native-firebase/auth';
 
 const Home = () => {
-  // const [selectedTab, setSelectedTab] = useState(0);
-
-  // const data = useSelector(state => state);
-
   const Tab = createBottomTabNavigator();
 
   return (
