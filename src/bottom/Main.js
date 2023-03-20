@@ -13,10 +13,20 @@ import Banner from '../common/Banner';
 const Main = () => {
   const [listProduct, setProductList] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [img, setImg] = useState([]);
 
   const navigation = useNavigation();
 
   useEffect(() => {
+    database().ref('Slider/').on('value', snapshot => {
+      let imgList = [];
+      snapshot.forEach(childSnapshot => {
+        var imgData = childSnapshot.val();
+        imgList.push(imgData);
+      });
+      setImg(imgList);
+    });
+
     database().ref('Category/').on('value', (snapshot) => {
       let categories = [];
       snapshot.forEach(childSnapshot => {
@@ -49,7 +59,12 @@ const Main = () => {
       <View style={{ flex: 1 }}>
 
         {/* Banner */}
-        <Banner/>
+        {/* <Banner /> */}
+        <View style={{ width: '100%', height: 170, borderWidth: 1, marginTop: 10}}>
+          <ScrollView>
+            
+          </ScrollView>
+        </View>
 
         {/* List Button Category */}
         <View style={{ width: '100%', height: 80, marginTop: 10, backgroundColor: '#DDDDDD', flexDirection: 'row' }}>
