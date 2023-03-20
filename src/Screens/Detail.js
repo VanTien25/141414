@@ -11,57 +11,10 @@ import database, { firebase } from '@react-native-firebase/database';
 
 const Detail = ({ route, navigation }) => {
   const [userId, setUserId] = useState(route.params.idUser);
-  const [listData, setData] = useState();
+  const [type, setType] = useState('');
   let [quantity, setQuantity] = useState(1);
-  // const [idUser, setIdUser] = useState(route.params.idUser);
-  const [size, setSize] = useState('');
-
-  useEffect(() => {
-    getItem();
-  }, [])
-
-  const getItem = () => {
-    database()
-      .ref('Users/' + userId)
-      .on('value', snapshot => {
-        let listUser = [];
-        snapshot.forEach(childSnapshot => {
-          var childData = childSnapshot.val();
-          listUser.push(childData);
-          console.log(childData.cart);
-        });
-        
-      });
-  }
-
-  const handleAddToCart = () => {
-    database()
-      .ref('Users/' + userId)
-      .on('value', snapshot => {
-        const data = snapshot.val();
-        setData(data);
-      });
-    const user = data.cart;
-    console.log(user);
-
-    // database()
-    //   .ref('Users/' + idUser)
-    //   .update({
-    //     cart: [
-    //       {
-    //         idUser,
-    //         id: route.params.id,
-    //         title: route.params.title,
-    //         price: route.params.price,
-    //         size: size,
-    //         quantity: quantity,
-    //         star: route.params.star,
-
-    //       }
-    //     ]
-    //   })
-    //   .then(() => Alert.alert('Data updated.'));
-  }
+  const [size, setSize] = useState(route.params.size);
+  console.log(type);
 
   const subtraction = () => {
     setQuantity(quantity - 1);
@@ -71,22 +24,17 @@ const Detail = ({ route, navigation }) => {
     setQuantity(quantity + 1);
   }
 
-  const getSize = (item) => {
-    setSize(item.name);
-  }
-
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
         <Image
-          source={route.params.image}
+          src={route.params.image}
           style={{
             width: '100%',
             height: 250,
             resizeMode: 'contain',
             borderRadius: 10,
             alignSelf: 'center',
-            marginTop: 10
           }}
         />
 
@@ -100,8 +48,8 @@ const Detail = ({ route, navigation }) => {
             justifyContent: 'center',
             alignItems: 'center',
             position: 'absolute',
-            top: 20,
-            left: 20,
+            top: 10,
+            left: 10,
           }}
           onPress={() => {
             navigation.goBack();
@@ -119,8 +67,8 @@ const Detail = ({ route, navigation }) => {
             width: 50,
             height: 50,
             position: 'absolute',
-            top: 20,
-            right: 20,
+            top: 10,
+            right: 10,
             justifyContent: 'center',
             alignItems: 'center'
           }}
@@ -162,33 +110,57 @@ const Detail = ({ route, navigation }) => {
           alignItems: 'center', padding: 15
         }}>
           <Text style={{ fontSize: 20, color: 'black' }}>Size: </Text>
-          <FlatList
-            data={route.params.size}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    getSize(item);
-                  }}
-                  style={{
-                    width: 60,
-                    height: 40,
-                    borderRadius: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    marginLeft: 15,
-                    backgroundColor: '#BB0000'
-                  }}
-                >
-                  <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
-                </TouchableOpacity>
-              );
-            }}
-          />
-
+          {
+            size.map((item) => {
+              if (item.quantity <= 0) {
+                return (
+                  <View
+                    key={item.name}
+                    style={{
+                      width: 60,
+                      height: 40,
+                      borderRadius: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      marginLeft: 15,
+                      backgroundColor: '#CCCCCC'
+                    }}
+                  >
+                    <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
+                  </View>
+                );
+              } else {
+                return (
+                  <TouchableOpacity
+                    key={item.name}
+                    onPress={() => setType(item.name)}
+                    style={type === item.name ? {
+                      width: 60,
+                      height: 40,
+                      borderRadius: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      marginLeft: 15,
+                      backgroundColor: '#009900'
+                    } : {
+                      width: 60,
+                      height: 40,
+                      borderRadius: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      marginLeft: 15,
+                      backgroundColor: '#BB0000'
+                    }}
+                  >
+                    <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
+                  </TouchableOpacity>
+                );
+              }
+            })
+          }
         </View>
 
         <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 5, marginBottom: 10 }} />
@@ -202,10 +174,11 @@ const Detail = ({ route, navigation }) => {
           padding: 15,
         }}>
           <Text style={{ fontSize: 20, color: 'black' }}>Số Lượng: </Text>
+
           <View style={{
-            width: 130, height: 40, borderRadius: 8,
+            width: 130, height: '100%', borderRadius: 8, backgroundColor: '#DDDDDD',
             flexDirection: 'row', padding: 10, borderWidth: 1.5,
-            justifyContent: 'center', alignItems: 'center',
+            justifyContent: 'center', alignItems: 'center', borderColor: '#BBBBBB'
           }}>
             {
               quantity <= 1 ? (
@@ -214,13 +187,13 @@ const Detail = ({ route, navigation }) => {
                     subtraction();
                   }}
                   style={{
-                    width: 35,
+                    width: 40,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
                   <Image
                     source={require('../images/sub.png')}
-                    style={{ width: 26, height: 26, tintColor: 'grey' }} />
+                    style={{ width: 26, height: 26, tintColor: '#CCCCCC' }} />
                 </View>
               ) : (
                 <TouchableOpacity
@@ -228,7 +201,7 @@ const Detail = ({ route, navigation }) => {
                     subtraction();
                   }}
                   style={{
-                    width: 35,
+                    width: 40,
                     justifyContent: 'center',
                     alignItems: 'center',
 
@@ -240,12 +213,10 @@ const Detail = ({ route, navigation }) => {
               )
             }
             <View style={{
-              width: 60,
-              height: 40,
-              borderWidth: 1,
+              width: 50,
+              height: '100%',
               textAlign: 'center',
               justifyContent: 'center',
-              backgroundColor: '#fff',
             }}>
               <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>{quantity}</Text>
             </View>
@@ -254,7 +225,7 @@ const Detail = ({ route, navigation }) => {
                 addition();
               }}
               style={{
-                width: 35,
+                width: 40,
                 justifyContent: 'center',
                 alignItems: 'center'
               }}>
@@ -302,7 +273,22 @@ const Detail = ({ route, navigation }) => {
         }}>
         <TouchableOpacity
           onPress={() => {
-            handleAddToCart();
+            if (size == "") {
+              Alert.alert("Hãy chọn Size!")
+            } else {
+              navigation.navigate('Cart', {
+                idUser: userId,
+                id: route.params.id,
+                title: route.params.title,
+                image: route.params.image,
+                price: route.params.price,
+                size: size,
+                quantity: quantity,
+                star: route.params.star,
+
+              })
+            }
+
           }}
           style={{
             width: '75%',

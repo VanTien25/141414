@@ -6,14 +6,21 @@ import { addToWishlist, removeFromCart } from '../redux/actions/Actions';
 import CommonButton from '../common/CommonButton';
 
 import { useNavigation } from '@react-navigation/native';
-const Cart = () => {
-  const [cartList, setCartList] = useState([]);
-  const cartData = useSelector(state => state.Reducers);
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
+
+const Cart = ({route}) => {
+  // console.log(route.params);
+  const listData = []
+  const [data, setData] = useState(listData);
+  
+
+
+
+
+
+
   return (
     <View style={{ flex: 1, paddingTop: 10 }}>
-      {cartData.length > 0 ? (
+      {/* {cartData.length > 0 ? (
         <FlatList
           data={cartData}
           renderItem={({ item, index }) => {
@@ -46,7 +53,7 @@ const Cart = () => {
             }}
           />
         </View>
-      ) : null}
+      ) : null} */}
     </View>
   );
 };

@@ -1,20 +1,17 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
-import { TextInput } from 'react-native'
-import { ScrollView } from 'react-native'
-import { TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native'
+import React, {useState} from 'react'
 
 import database from '@react-native-firebase/database';
 
-const CategoriesMan = () => {
-    const [name, setName] = useState('');
+const SliderMan = () => {
+    const [image, setImage] = useState('');
 
-    const addCategory = () => {
+    const addSlider = () => {
         database()
-            .ref('Category/')
+            .ref('Slider/')
             .push()
             .set({
-                name,
+                image,
             })
             .then((error) => {
                 if (error) {
@@ -29,19 +26,19 @@ const CategoriesMan = () => {
 
         <ScrollView style={{ flex: 1 }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 15, marginBottom: 20 }}>
-                <Text>Thêm Loại Sản Phẩm</Text>
+                <Text>Thêm Slider</Text>
 
                 <TextInput
-                    onChangeText={text => setName(text)}
+                    onChangeText={text => setImage(text)}
                     keyboardType="default"
-                    value={name}
+                    value={image}
                     style={{ width: '60%', height: 40, marginTop: 15, borderWidth: 1, borderRadius: 20, justifyContent: 'center', alignItems: 'center', padding: 10 }}
-                    placeholder='name' />
+                    placeholder='image' />
 
 
                 <TouchableOpacity
                     onPress={() => {
-                        addCategory();
+                        addSlider();
                     }}
                     style={{
                         width: '60%',
@@ -60,4 +57,4 @@ const CategoriesMan = () => {
     )
 }
 
-export default CategoriesMan
+export default SliderMan

@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList, TouchableOpacity, ScrollView, StatusBar, SafeAreaView } from 'react-native'
+import { View, Text, Image, FlatList, TouchableOpacity, ScrollView, StatusBar, SafeAreaView, VirtualizedList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ProductItem from '../common/ProductItem';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,219 +8,99 @@ import database, { firebase } from '@react-native-firebase/database';
 
 
 import { useNavigation } from '@react-navigation/native';
+import Banner from '../common/Banner';
 
 const Main = () => {
-  const dispatch = useDispatch();
-  const [categoryList, setCategoryList] = useState([]);
-  const [tshirtList, setTshirtList] = useState([]);
-  const [headwearList, setHeadwearList] = useState([]);
-  const [hoodieList, setHoodieList] = useState([]);
-  const [jacketList, setJacketList] = useState([]);
-  const [trousersList, setTrousersList] = useState([]);
-
+  const [listProduct, setProductList] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const navigation = useNavigation();
 
   useEffect(() => {
-    database().ref('Products/').on('value', (snapshot) => {
-      let productList = [];
-      let catList = [];
-      let test = [];
+    database().ref('Category/').on('value', (snapshot) => {
+      let categories = [];
       snapshot.forEach(childSnapshot => {
         var childData = childSnapshot.val();
-        catList.push(
-          childData.category,
+        categories.push(
+          childData,
         );
+      });
+      setCategories(categories);
+    });
+
+    database().ref('Products/').on('value', (snapshot) => {
+      let productList = [];
+      snapshot.forEach(childSnapshot => {
+        var childData = childSnapshot.val();
         productList.push(
           childData,
         );
-        test.push(
-          childData.data
-        )
       });
-      setCategoryList(catList);
-      setTshirtList(productList[0].data);
-      setHeadwearList(productList[1].data);
-      setHoodieList(productList[2].data);
-      setJacketList(productList[3].data);
-      setTrousersList(productList[4].data);
+      // console.log(productList);
+      setProductList(productList);
     });
   }, [])
+
 
   return (
     <>
       <Search />
-      <ScrollView style={{ flex: 1, marginTop: 15 }}>
-        <View style={{ flex: 1 }}>
-          <Image
-            source={require('../images/banner.png')}
-            style={{
-              width: '94%',
-              height: 200,
-              borderRadius: 10,
-              alignSelf: 'center',
-              marginTop: 10
-            }} />
-          <View style={{ marginTop: 20, backgroundColor: '#AA0000', height: 50 }}>
-            <FlatList
-              data={categoryList}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item, index }) => {
-                return (
-                  <TouchableOpacity
-                    style={{ padding: 10, marginLeft: 20, borderRadius: 20, height: '80%', alignSelf: 'center', backgroundColor: '#fff' }}
-                    onPress={() => {
-                      if (item === "T-Shirt") {
-                        navigation.navigate('Category', {
-                          item,
-                          list : tshirtList,
-                        });
-                      }
-                      if (item === "Headwear") {
-                        navigation.navigate('Category', {
-                          item,
-                          list : headwearList,
-                        });
-                      }
-                      if (item === "Hoodie") {
-                        navigation.navigate('Category', {
-                          item,
-                          list : hoodieList,
-                        });
-                      }
-                      if (item === "Jacket") {
-                        navigation.navigate('Category', {
-                          item,
-                          list : jacketList,
-                        });
-                      }
-                      if (item === "Trousers") {
-                        navigation.navigate('Category', {
-                          item,
-                          list : trousersList,
-                        });
-                      }
-                    }}
-                  >
-                    <Text style={{ color: '#000' }}>{item}</Text>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </View>
+      {/* <ScrollView style={{ flex: 1, marginTop: 15 }}> */}
+      <View style={{ flex: 1 }}>
 
-          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New T-Shirt</Text>
-          </View>
-          <View style={{ marginTop: 20 }}>
-            <FlatList
-              data={tshirtList}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item, index }) => {
-                return (
-                  <ProductItem
-                    item={item}
+        {/* Banner */}
+        <Banner/>
+
+        {/* List Button Category */}
+        <View style={{ width: '100%', height: 80, marginTop: 10, backgroundColor: '#DDDDDD', flexDirection: 'row' }}>
+          <FlatList
+            data={categories}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('Category', {
+                      name: item.name,
+                      listProduct
+                    });
+                  }}
+                  style={{ width: 60, height: 60, alignSelf: 'center', borderRadius: 10, backgroundColor: '#fff', marginLeft: 18, borderRadius: 100 }}>
+                  <Image
+                    src={item.image}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                    }}
                   />
-                );
-              }}
-            />
-          </View>
-
-          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New HeadWear</Text>
-          </View>
-          <View style={{ marginTop: 20 }}>
-            <FlatList
-              data={headwearList}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item, index }) => {
-                return (
-                  <ProductItem
-                    item={item}
-                    onAddWishlist={x => {
-                      dispatch(addToWishlist(x));
-                    }}
-                    onAddToCart={x => {
-                      dispatch(addItemToCart(item));
-                    }} />
-                );
-              }}
-            />
-          </View>
-
-          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New Hoodie</Text>
-          </View>
-          <View style={{ marginTop: 20 }}>
-            <FlatList
-              data={hoodieList}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item, index }) => {
-                return (
-                  <ProductItem
-                    item={item}
-                    onAddWishlist={x => {
-                      dispatch(addToWishlist(x));
-                    }}
-                    onAddToCart={x => {
-                      dispatch(addItemToCart(item));
-                    }} />
-                );
-              }}
-            />
-          </View>
-
-          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New Jacket</Text>
-          </View>
-          <View style={{ marginTop: 20 }}>
-            <FlatList
-              data={jacketList}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item, index }) => {
-                return (
-                  <ProductItem
-                    item={item}
-                    onAddWishlist={x => {
-                      dispatch(addToWishlist(x));
-                    }}
-                    onAddToCart={x => {
-                      dispatch(addItemToCart(item));
-                    }} />
-                );
-              }}
-            />
-          </View>
-
-          <View style={{ backgroundColor: '#AA0000', width: '94%', height: 30, marginTop: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>New Trousers & Shorts</Text>
-          </View>
-          <View style={{ marginTop: 20 }}>
-            <FlatList
-              data={trousersList}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item, index }) => {
-                return (
-                  <ProductItem
-                    item={item}
-                    onAddWishlist={x => {
-                      dispatch(addToWishlist(x));
-                    }}
-                    onAddToCart={x => {
-                      dispatch(addItemToCart(x));
-                    }} />
-                );
-              }}
-            />
-          </View>
+                </TouchableOpacity>
+              )
+            }}
+          />
         </View>
-      </ScrollView>
+
+        {/* List San Pham */}
+        <View style={{ backgroundColor: '#AA0000', width: '100%', height: 30, marginTop: 10, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Danh sách sản phẩm</Text>
+        </View>
+        <View style={{ marginTop: 10, marginBottom: 200 }}>
+          <FlatList
+            data={listProduct}
+            showsVerticalScrollIndicator={false}
+            columnWrapperStyle={{ justifyContent: 'space-evenly' }}
+            numColumns={2}
+            renderItem={({ item, index }) => {
+              return (
+                <ProductItem
+                  item={item}
+                />
+              );
+            }}
+          />
+        </View>
+      </View>
+      {/* </ScrollView> */}
     </>
   );
 };

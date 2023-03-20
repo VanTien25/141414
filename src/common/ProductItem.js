@@ -26,21 +26,21 @@ const ProductItem = ({ item}) => {
                     })
             }}
             style={{
-                borderRadius: 20,
+                borderRadius: 10,
                 elevation: 5,
-                width: 200,
+                width: 180,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginLeft: 10,
                 backgroundColor: '#fff',
-                marginBottom: 10,
+                marginBottom: 15,
             }}>
             <View style={{ width: '100%' }}>
                 <Image
-                    source={item.image}
+                    src={item.image}
                     style={{
                         width: '100%',
                         height: 120,
+                        resizeMode: 'contain',
                         borderTopLeftRadius: 20,
                         borderTopRightRadius: 20,
                     }}

@@ -102,6 +102,7 @@ const Profile = () => {
         }}>
         <Text style={{ color: 'black' }}>ProductsManager</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('CategoriesMan')
@@ -115,6 +116,21 @@ const Profile = () => {
           justifyContent: 'center',
         }}>
         <Text style={{ color: 'black' }}>CategoriesManager</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('SliderMan')
+        }}
+        style={{
+          width: '90%',
+          alignSelf: 'center',
+          height: 50,
+          borderBottomWidth: 0.3,
+          borderBottomColor: '#8e8e8e',
+          justifyContent: 'center',
+        }}>
+        <Text style={{ color: 'black' }}>SliderMan</Text>
       </TouchableOpacity>
     </View>
   );

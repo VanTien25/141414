@@ -21,6 +21,8 @@ import Detail from './Screens/Detail';
 import Category from './Screens/Category';
 import ProductsManager from './Screens/ProductsManager';
 import CategoriesMan from './Screens/CategoriesMan';
+import OrderCustom from './Screens/OrderCustom'
+import SliderMan from './Screens/SliderMan'
 
 const Stack = createStackNavigator();
 
@@ -117,6 +119,16 @@ const AppNavigator = () => {
                 options={{ headerShown: false }}
                 name="CategoriesMan"
                 component={CategoriesMan} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="SliderMan"
+                component={SliderMan} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="OrderCustom"
+                component={OrderCustom} />
 
         </Stack.Navigator>
     )
