@@ -72,15 +72,14 @@ const Signup = () => {
         auth()
             .createUserWithEmailAndPassword(email, password, name, phone)
             .then(() => {
-                firestore()
-                    .collection('User')
-                    .doc(firebase.auth().currentUser.uid)
+                database()
+                    .ref('User/' + firebase.auth().currentUser.uid)
                     .set({
                         name: name,
                         email: email,
                         phone: phone,
                         password: password,
-                        cart: [],
+                        cart: []
                     })
                     .then((error) => {
                         if (error) {
@@ -91,6 +90,27 @@ const Signup = () => {
                             navigation.goBack();
                         }
                     });
+
+
+                // firestore()
+                //     .collection('User')
+                //     .doc(firebase.auth().currentUser.uid)
+                //     .set({
+                //         name: name,
+                //         email: email,
+                //         phone: phone,
+                //         password: password,
+                //         cart: [],
+                //     })
+                //     .then((error) => {
+                //         if (error) {
+                //             alert('Đăng kí không thành công');
+                //             navigation.goBack();
+                //         } else {
+                //             alert('Đăng kí thành công');
+                //             navigation.goBack();
+                //         }
+                //     });
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {

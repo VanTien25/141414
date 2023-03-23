@@ -8,16 +8,54 @@ import { Swipeable } from 'react-native-gesture-handler';
 
 import { useNavigation } from '@react-navigation/native';
 import CountQuantity from '../common/CountQuantity';
+import database from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/auth';
 
 const Cart = () => {
-  const [cartList, setCartList] = useState([]);
-  const cartData = useSelector(state => state.Reducers);
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  console.log(cartData);
+  const [dataCart, setDataCart] = useState([]);
+  // const cartData = useSelector(state => state.Reducers);
+  // // const dispatch = useDispatch();
+  // const navigation = useNavigation();
+  // console.log(cartData);
+  const idUser = firebase.auth().currentUser.uid;
+  console.log(dataCart);
+
+  useEffect(() => {
+    database()
+      .ref('Order/' + idUser)
+      .on('value', snapshot => {
+        let arr = [];
+        // console.log('User data: ', snapshot.val());
+        snapshot.forEach(childSnapshot => {
+          var item = childSnapshot.val();
+          console.log(childSnapshot.val());
+          arr.push({
+            id: childSnapshot.key,
+            title: item.itemPro.title,
+            price: item.itemPro.price,
+            image: item.itemPro.image,
+            star: item.itemPro.star,
+            desc: item.itemPro.desc,
+            size: item.itemPro.size,
+            quantity: item.itemPro.quantity,
+            
+          })
+        })
+        setDataCart(arr);
+        // console.log(arr);
+      });
+  }, [])
+
+
   return (
     <View style={{ flex: 1 }}>
-      {cartData.length > 0 ? (
+      {
+        dataCart.map((item) => {
+          return console.log(item.size);
+        })
+      }
+
+      {/* {cartData.length > 0 ? (
         <FlatList
           data={cartData}
           renderItem={({ item, index }) => {
@@ -52,7 +90,7 @@ const Cart = () => {
             }}
           />
         </View>
-      ) : null}
+      ) : null} */}
     </View>
   );
 };

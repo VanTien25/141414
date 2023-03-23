@@ -39,6 +39,17 @@ const Detail = ({ route, navigation }) => {
   }
 
   const onAddToCart = (itemPro) => {
+    // firestore()
+    //   .collection('Order')
+    //   .doc(userId)
+    //   .add(
+    //     itemPro,
+    //   )
+    //   .then(() => {
+    //     console.log('User added!');
+    //   });
+
+
     database()
       .ref('Order/' + userId)
       .push()
@@ -46,7 +57,7 @@ const Detail = ({ route, navigation }) => {
         itemPro,
       })
       .then(() => console.log('Data set.'));
-    // dispatch(addItemToCart(itemPro));
+    dispatch(addItemToCart(itemPro));
   };
 
 

@@ -20,73 +20,75 @@ const Main = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    firestore()
-      .collection('Slider')
-      .get()
-      .then(querySnapshot => {
-        let listImg = [];
-        querySnapshot.forEach(documentSnapshot => {
-          var childData = documentSnapshot.data();
-          listImg.push(childData);
-        });
-        setImg(listImg);
-      });
-
-    firestore()
-      .collection('Category')
-      .get()
-      .then(querySnapshot => {
-        let listCategories = [];
-        querySnapshot.forEach(documentSnapshot => {
-          var childData = documentSnapshot.data();
-          listCategories.push(childData);
-        });
-        setCategories(listCategories)
-      });
-    // database().ref('Category/').on('value', (snapshot) => {
-    //   let categories = [];
-    //   snapshot.forEach(childSnapshot => {
-    //     var childData = childSnapshot.val();
-    //     categories.push(
-    //       childData,
-    //     );
-    //   });
-    //   setCategories(categories);
-    // });
-
-
-    firestore()
-      .collection('Product')
-      .get()
-      .then(querySnapshot => {
-        let productList = [];
-        querySnapshot.forEach(documentSnapshot => {
-          productList.push({
-            id: documentSnapshot.id,
-            ...documentSnapshot.data(),
-          })
-        });
-        setListProduct(productList)
-        console.log(productList)
-      });
-    // database().ref('Products/').on('value', (snapshot) => {
-    //   let productList = [];
-    //   snapshot.forEach(childSnapshot => {
-    //     var childData = childSnapshot.val();
-    //     productList.push({
-    //       id: childSnapshot.key,
-    //       title: childData.title,
-    //       price: childData.price,
-    //       image: childData.image,
-    //       size: childData.size,
-    //       category: childData.category,
-    //       star: childData.star,
-    //       desc: childData.desc,
+    //   firestore()
+    //     .collection('Slider')
+    //     .get()
+    //     .then(querySnapshot => {
+    //       let listImg = [];
+    //       querySnapshot.forEach(documentSnapshot => {
+    //         var childData = documentSnapshot.data();
+    //         listImg.push(childData);
+    //       });
+    //       setImg(listImg);
     //     });
+
+    //   firestore()
+    //     .collection('Category')
+    //     .get()
+    //     .then(querySnapshot => {
+    //       let listCategories = [];
+    //       querySnapshot.forEach(documentSnapshot => {
+    //         var childData = documentSnapshot.data();
+    //         listCategories.push(childData);
+    //       });
+    //       setCategories(listCategories)
+    //     });
+
+    database().ref('Category/').on('value', (snapshot) => {
+      let categories = [];
+      snapshot.forEach(childSnapshot => {
+        var childData = childSnapshot.val();
+        categories.push(
+          childData,
+        );
+      });
+      setCategories(categories);
+    });
+
+
+    // firestore()
+    //   .collection('Product')
+    //   .get()
+    //   .then(querySnapshot => {
+    //     let productList = [];
+    //     querySnapshot.forEach(documentSnapshot => {
+    //       productList.push({
+    //         id: documentSnapshot.id,
+    //         ...documentSnapshot.data(),
+    //       })
+    //     });
+    //     setListProduct(productList)
+    //     // console.log(productList)
     //   });
-    //   // 
-    //   setProductList(productList);
-    // });
+
+    database().ref('Products/').on('value', (snapshot) => {
+      let productList = [];
+      snapshot.forEach(childSnapshot => {
+        var childData = childSnapshot.val();
+        productList.push({
+          id: childSnapshot.key,
+          title: childData.title,
+          price: childData.price,
+          image: childData.image,
+          size: childData.size,
+          category: childData.category,
+          star: childData.star,
+          desc: childData.desc,
+        });
+      });
+      // 
+      setListProduct(productList);
+    });
   }, [])
 
   // useEffect(() => {
