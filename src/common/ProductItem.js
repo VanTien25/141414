@@ -4,10 +4,8 @@ import { Image } from 'react-native'
 import { TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import database from '@react-native-firebase/database';
-import { firebase } from '@react-native-firebase/auth';
 
-const ProductItem = ({ item}) => {
+const ProductItem = ({ item, index }) => {
     const navigation = useNavigation();
 
     return (
@@ -15,14 +13,15 @@ const ProductItem = ({ item}) => {
             onPress={() => {
                 navigation.navigate('Detail',
                     {
-                        idUser: firebase.auth().currentUser.uid,
                         id: item.id,
+                        category: item.category,
                         title: item.title,
                         image: item.image,
                         price: item.price,
                         size: item.size,
                         star: item.star,
                         desc: item.desc,
+
                     })
             }}
             style={{

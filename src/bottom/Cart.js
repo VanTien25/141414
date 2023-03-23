@@ -1,26 +1,23 @@
-import { View, Text, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import CartItem from '../common/CartItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToWishlist, removeFromCart } from '../redux/actions/Actions';
 import CommonButton from '../common/CommonButton';
+import { Swipeable } from 'react-native-gesture-handler';
 
 import { useNavigation } from '@react-navigation/native';
+import CountQuantity from '../common/CountQuantity';
 
-const Cart = ({route}) => {
-  // console.log(route.params);
-  const listData = []
-  const [data, setData] = useState(listData);
-  
-
-
-
-
-
-
+const Cart = () => {
+  const [cartList, setCartList] = useState([]);
+  const cartData = useSelector(state => state.Reducers);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  console.log(cartData);
   return (
-    <View style={{ flex: 1, paddingTop: 10 }}>
-      {/* {cartData.length > 0 ? (
+    <View style={{ flex: 1 }}>
+      {cartData.length > 0 ? (
         <FlatList
           data={cartData}
           renderItem={({ item, index }) => {
@@ -39,7 +36,7 @@ const Cart = ({route}) => {
         />
       ) : (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#000000'}}>No Items Added in Cart</Text>
+          <Text>No Items Added in Cart</Text>
         </View>
       )}
       {cartData.length > 0 ? (
@@ -49,11 +46,13 @@ const Cart = ({route}) => {
             textColor={'#fff'}
             title={'Checkout'}
             onPress={() => {
+
+
               navigation.navigate('Checkout');
             }}
           />
         </View>
-      ) : null} */}
+      ) : null}
     </View>
   );
 };

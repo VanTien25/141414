@@ -8,13 +8,27 @@ import CommonButton from '../common/CommonButton';
 import AddDetail from '../common/AddDetail';
 import { Alert } from 'react-native';
 import database, { firebase } from '@react-native-firebase/database';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, addToWishlist } from '../redux/actions/Actions';
+import firestore from '@react-native-firebase/firestore';
 
 const Detail = ({ route, navigation }) => {
-  const [userId, setUserId] = useState(route.params.idUser);
+  const dispatch = useDispatch();
   const [type, setType] = useState('');
   let [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(route.params.size);
-  console.log(type);
+  const userId = firebase.auth().currentUser.uid;
+
+  const itemPro = {
+    id: route.params.id,
+    title: route.params.title,
+    price: route.params.price,
+    image: route.params.image,
+    star: route.params.star,
+    size: type,
+    quantity: quantity,
+    desc: route.params.desc,
+  }
 
   const subtraction = () => {
     setQuantity(quantity - 1);
@@ -23,6 +37,18 @@ const Detail = ({ route, navigation }) => {
   const addition = () => {
     setQuantity(quantity + 1);
   }
+
+  const onAddToCart = (itemPro) => {
+    database()
+      .ref('Order/' + userId)
+      .push()
+      .set({
+        itemPro,
+      })
+      .then(() => console.log('Data set.'));
+    // dispatch(addItemToCart(itemPro));
+  };
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -64,16 +90,16 @@ const Detail = ({ route, navigation }) => {
         <ImageBackground
           source={require('../images/star.png')}
           style={{
-            width: 50,
-            height: 50,
+            width: 60,
+            height: 60,
             position: 'absolute',
-            top: 10,
-            right: 10,
+            top: 15,
+            right: 15,
             justifyContent: 'center',
             alignItems: 'center'
           }}
         >
-          <Text style={{ fontWeight: 'bold' }}>{route.params.star}</Text>
+          <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 18 }}>{route.params.star}</Text>
         </ImageBackground>
 
         {/* Title */}
@@ -271,34 +297,34 @@ const Detail = ({ route, navigation }) => {
           backgroundColor: '#fff',
           elevation: 5,
         }}>
-        <TouchableOpacity
-          onPress={() => {
-            if (size == "") {
-              Alert.alert("Hãy chọn Size!")
-            } else {
-              navigation.navigate('Cart', {
-                idUser: userId,
-                id: route.params.id,
-                title: route.params.title,
-                image: route.params.image,
-                price: route.params.price,
-                size: size,
-                quantity: quantity,
-                star: route.params.star,
-
-              })
-            }
-
-          }}
-          style={{
-            width: '75%',
-            height: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#AA0000'
-          }}>
-          <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>Thêm vào giỏ hàng</Text>
-        </TouchableOpacity>
+        {
+          type == '' ?
+            (<View
+              style={{
+                width: '75%',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#DDDDDD'
+              }}>
+              <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>Thêm vào giỏ hàng</Text>
+            </View>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  onAddToCart(itemPro);
+                }}
+                style={{
+                  width: '75%',
+                  height: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#AA0000'
+                }}>
+                <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>Thêm vào giỏ hàng</Text>
+              </TouchableOpacity>
+            )
+        }
         <TouchableOpacity
           style={{
             width: '25%',

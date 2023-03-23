@@ -22,6 +22,7 @@ const Category = ({ route }) => {
           justifyContent: 'space-between',
           alignItems: 'center',
           flexDirection: 'row',
+          marginBottom: 15,
           padding: 15
         }}>
         <TouchableOpacity
@@ -50,7 +51,7 @@ const Category = ({ route }) => {
         </ImageBackground>
       </View>
 
-      <ScrollView style={{ flex: 1, marginBottom: 20, paddingTop: 15}}>
+      <ScrollView>
         {
           dataPro.map((item) => {
             if (item.category == nameCat) {

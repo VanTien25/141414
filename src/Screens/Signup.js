@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { ScrollView } from 'react-native'
 import database from '@react-native-firebase/database';
 import auth, { firebase } from '@react-native-firebase/auth';
-let isValid = true;
+import firestore from '@react-native-firebase/firestore';
 
 const Signup = () => {
     const navigation = useNavigation();
@@ -72,8 +72,9 @@ const Signup = () => {
         auth()
             .createUserWithEmailAndPassword(email, password, name, phone)
             .then(() => {
-                database().
-                    ref('Users/' + firebase.auth().currentUser.uid)
+                firestore()
+                    .collection('User')
+                    .doc(firebase.auth().currentUser.uid)
                     .set({
                         name: name,
                         email: email,
@@ -83,10 +84,10 @@ const Signup = () => {
                     })
                     .then((error) => {
                         if (error) {
-                            alert('Lỗi')
+                            alert('Đăng kí không thành công');
+                            navigation.goBack();
                         } else {
-                            alert('Thành công');
-                            console.log(':yes');
+                            alert('Đăng kí thành công');
                             navigation.goBack();
                         }
                     });
@@ -95,7 +96,7 @@ const Signup = () => {
                 if (error.code === 'auth/email-already-in-use') {
                     setButtonDisabled(false);
                     Alert.alert('Địa chỉ email đó đã được sử dụng!');
-                    
+
                 }
 
                 if (error.code === 'auth/invalid-email') {

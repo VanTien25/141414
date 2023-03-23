@@ -42,7 +42,7 @@ const Login = () => {
         navigation.navigate('Home');
       }).catch(() => {
         setModalVisible(false);
-        Alert.alert('Dang nhap khong thanh cong!');
+        Alert.alert('Đăng nhập không thành công!');
       });
   };
 
@@ -58,7 +58,7 @@ const Login = () => {
         Login
       </Text>
       <CustomTextInput
-        placeholder={'Nhap Email...'}
+        placeholder={'Nhập email...'}
         icon={require('../images/email.png')}
         value={email}
         onChangeText={txt => {
@@ -68,13 +68,13 @@ const Login = () => {
 
       {
         badEmail === true && (
-          <Text style={{ marginTop: 10, marginLeft: 30, color: 'yellow', fontWeight: 'bold' }}>Hay nhap Email</Text>
+          <Text style={{ marginTop: 10, marginLeft: 30, color: 'yellow', fontWeight: 'bold' }}>Hãy nhập email</Text>
         )
       }
 
       <CustomTextInput
         type={'password'}
-        placeholder={'Nhap Password...'}
+        placeholder={'Nhập password...'}
         icon={require('../images/lock.png')}
         value={password}
         onChangeText={txt => {
@@ -84,7 +84,7 @@ const Login = () => {
 
       {
         badPassword === true && (
-          <Text style={{ marginTop: 10, marginLeft: 30, color: 'yellow', fontWeight: 'bold' }}>Hay nhap Password</Text>
+          <Text style={{ marginTop: 10, marginLeft: 30, color: 'yellow', fontWeight: 'bold' }}>Hãy nhập mật khẩu</Text>
         )
       }
 

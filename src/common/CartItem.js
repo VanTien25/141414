@@ -27,7 +27,7 @@ const CartItem = ({
       }}>
       <View style={{ width: '100%' }}>
         <Image
-          source={item.image}
+          src={item.image}
           style={{
             width: '100%',
             height: 140,

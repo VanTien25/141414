@@ -24,9 +24,7 @@ const CountQuantity = () => {
                     source={require('../images/sub.png')}
                     style={{ width: 26, height: 26 }} />
             </TouchableOpacity>
-            <TextInput
-                onChangeText={onChangeNumber}
-                value={number}
+            <Text
                 style={{
                     width: 60,
                     height: 40,
@@ -38,9 +36,9 @@ const CountQuantity = () => {
                     fontSize: 18,
                     fontWeight: 'bold',
                     color: 'black',
-                }}
-                placeholder='1'
-                keyboardType="numeric" />
+                }}>
+                    1
+                </Text>
             <TouchableOpacity
                 onPress={() => {
                     addition();

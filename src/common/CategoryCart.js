@@ -3,8 +3,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { ImageBackground } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import database from '@react-native-firebase/database';
-import { firebase } from '@react-native-firebase/auth';
+
 
 const CategoryCart = ({ item }) => {
     const navigation = useNavigation();
@@ -15,11 +14,11 @@ const CategoryCart = ({ item }) => {
             onPress={() => {
                 navigation.navigate('Detail',
                     {
-                        idUser: firebase.auth().currentUser.uid,
                         id: item.id,
                         title: item.title,
                         image: item.image,
                         price: item.price,
+                        category: item.category,
                         size: item.size,
                         star: item.star,
                         desc: item.desc,
