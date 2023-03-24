@@ -1,7 +1,7 @@
 import { View, Text, Image } from 'react-native'
 import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { firebase } from '@react-native-firebase/auth';
 
 const Splash = () => {
   const navigation = useNavigation();
@@ -11,13 +11,8 @@ const Splash = () => {
     }, 3000);
   }, []);
 
-  const getData = async () => {
-    const email = await AsyncStorage.getItem('EMAIL');
-    if ( email !== null ) {
-      navigation.navigate('Home');
-    } else {
-      navigation.navigate('Login');
-    }
+  const getData = () => {
+    navigation.navigate('Login');
   };
 
   return (

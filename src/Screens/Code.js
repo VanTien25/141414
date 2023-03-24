@@ -3,38 +3,12 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import CustomTextInput from '../common/CustomTextInput';
 import CommonButton from '../common/CommonButton';
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SendMail = () => {
     const navigation = useNavigation();
     const [code, setCode] = useState('');
     const [badCode, setBadCode] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    // const forgot = () => {
-    //     setModalVisible(true);
-    //     if (code == '') {
-    //         setModalVisible(false);
-    //         setBadEmailForgot(true);
-    //     } else {
-    //         setBadEmailForgot(false);
-    //         setTimeout(() => {
-    //             setBadEmailForgot(false);
-    //             getData();
-    //         }, 2000);
-    //     }
-    // };
-
-    // const getData = async () => {
-    //     const fEmail = await AsyncStorage.getItem('EMAIL');
-    //     if (code === fEmail) {
-    //         setModalVisible(false);
-    //         navigation.navigate('Code');
-    //     } else {
-    //         setModalVisible(false);
-    //     }
-    // };
-
-
 
     return (
         <View style={{ flex: 1, backgroundColor: 'red' }}>

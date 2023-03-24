@@ -7,14 +7,12 @@ import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/auth';
 import { Swipeable } from 'react-native-gesture-handler';
 
-const MyAddress = () => {
-    const [listAddress, setAddress] = useState([])
+const MyAddress = ({ route }) => {
+    const [listAddress, setListAddress] = useState([])
+    const [selectedAddress, setSelectedAddress] = useState();
     const navigation = useNavigation();
-    const isFocused = useIsFocused();
-    const addressList = useSelector(state => state.AddressReducers);
     const dispatch = useDispatch();
     const userId = firebase.auth().currentUser.uid;
-    console.log(addressList);
 
     const rightSwipe = () => {
         return (
@@ -59,7 +57,7 @@ const MyAddress = () => {
                         address: item.address,
                     })
                 })
-                setAddress(array);
+                setListAddress(array);
             });
     }, [])
 

@@ -1,7 +1,5 @@
 import { View, Text, FlatList, TouchableOpacity, Image, ImageBackground, Modal, Pressable } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToWishlist, removeFromCart } from '../redux/actions/Actions';
 import CommonButton from '../common/CommonButton';
 import { Swipeable } from 'react-native-gesture-handler';
 
@@ -13,12 +11,7 @@ import { Alert } from 'react-native';
 
 const Cart = () => {
   const [dataCart, setDataCart] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  // const ref = useRef();
-  // const cartData = useSelector(state => state.Reducers);
-  // // const dispatch = useDispatch();
   const navigation = useNavigation();
-  // console.log(cartData);
   const idUser = firebase.auth().currentUser.uid;
   const total = dataCart.reduce((accumulator, current) => accumulator + current.price * current.quantity, 0);
   const totalStar = dataCart.reduce((accumulator, current) => accumulator + current.star * current.quantity, 0)
@@ -43,16 +36,15 @@ const Cart = () => {
   };
 
   const onComponentOpen = (idPro) => {
-    database().ref('Order/' + idUser + '/' + idPro).remove();
-    Alert.alert('Xóa thành công.')
+    database().ref('Cart/' + idUser + '/' + idPro).remove();
+    alert('Xóa thành công.');
   }
 
   useEffect(() => {
     database()
-      .ref('Order/' + idUser)
+      .ref('Cart/' + idUser)
       .on('value', snapshot => {
         let arr = [];
-        // console.log('User data: ', snapshot.val());
         snapshot.forEach(childSnapshot => {
           var item = childSnapshot.val();
           arr.push({
@@ -64,11 +56,9 @@ const Cart = () => {
             desc: item.itemPro.desc,
             size: item.itemPro.size,
             quantity: item.itemPro.quantity,
-
           })
         })
         setDataCart(arr);
-        // console.log(arr);
       });
   }, [])
 
@@ -138,12 +128,12 @@ const Cart = () => {
         <View style={{ backgroundColor: '#FFFFCC' }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 7 }}>
             <Text style={{ fontSize: 20, }}>Tổng tiền:</Text>
-            <Text style={{ fontSize: 20,  }}>{total} VNĐ</Text>
+            <Text style={{ fontSize: 20, }}>{total} VNĐ</Text>
           </View>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 7 }}>
-            <Text style={{ fontSize: 20,  }}>Điểm tích lũy:</Text>
-            <View style={{ flexDirection: 'row'}}>
+            <Text style={{ fontSize: 20, }}>Điểm tích lũy:</Text>
+            <View style={{ flexDirection: 'row' }}>
               <Text style={{ fontSize: 20, marginRight: 5 }}>{totalStar}</Text>
               <Image
                 source={require('../images/star.png')}
@@ -164,8 +154,10 @@ const Cart = () => {
             }}
             onPress={() => {
               navigation.navigate('Checkout', {
-                listData: dataCart,
-              })
+                total: total,
+                totalStar: totalStar,
+                dataCart
+              });
             }}
           >
             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>Checkout</Text>

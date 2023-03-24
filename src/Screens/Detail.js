@@ -40,7 +40,7 @@ const Detail = ({ route }) => {
 
   const onAddToCart = (itemPro) => {
     database()
-      .ref('Order/' + userId)
+      .ref('Cart/' + userId)
       .push()
       .set({
         itemPro,
