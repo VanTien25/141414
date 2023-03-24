@@ -11,56 +11,37 @@ import firestore from '@react-native-firebase/firestore';
 
 const Signup = () => {
     const navigation = useNavigation();
-    const [name, setName] = useState('');
-    const [badName, setBadName] = useState(false);
     const [email, setEmail] = useState('');
     const [badEmail, setBadEmail] = useState(false);
-    const [phone, setPhone] = useState('');
-    const [badPhone, setBadPhone] = useState(false);
     const [password, setPassword] = useState('');
     const [badPassword, setBadPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [badConfirmPassword, setBadConfirmPassword] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
 
-    const signup1 = () => {
+    const signup = () => {
         setButtonDisabled(true);
-        if (name == '') {
-            setBadName(true);
+        if (email == '') {
+            setBadEmail(true);
             setButtonDisabled(false);
         } else {
-            setBadName(false);
-            if (email == '') {
-                setBadEmail(true);
+            setBadEmail(false);
+            if (password == '') {
+                setBadPassword(true);
                 setButtonDisabled(false);
             } else {
-                setBadEmail(false);
-                if (phone == '') {
-                    setBadPhone(true);
-                    setButtonDisabled(false);
-                } else if (phone.length < 10) {
-                    setBadPhone(true);
+                setBadPassword(false);
+                if (confirmPassword == '') {
+                    setBadConfirmPassword(true);
                     setButtonDisabled(false);
                 } else {
-                    setBadPhone(false);
-                    if (password == '') {
-                        setBadPassword(true);
+                    setBadConfirmPassword(false);
+                    if (password !== confirmPassword) {
+                        setBadConfirmPassword(true);
                         setButtonDisabled(false);
                     } else {
-                        setBadPassword(false);
-                        if (confirmPassword == '') {
-                            setBadConfirmPassword(true);
-                            setButtonDisabled(false);
-                        } else {
-                            setBadConfirmPassword(false);
-                            if (password !== confirmPassword) {
-                                setBadConfirmPassword(true);
-                                setButtonDisabled(false);
-                            } else {
-                                setBadConfirmPassword(false);
-                                saveData();
-                            }
-                        }
+                        setBadConfirmPassword(false);
+                        saveData();
                     }
                 }
             }
@@ -70,16 +51,13 @@ const Signup = () => {
     // Lưu Data vào firebase
     const saveData = () => {
         auth()
-            .createUserWithEmailAndPassword(email, password, name, phone)
+            .createUserWithEmailAndPassword(email, password,)
             .then(() => {
                 database()
                     .ref('User/' + firebase.auth().currentUser.uid)
                     .set({
-                        name: name,
                         email: email,
-                        phone: phone,
                         password: password,
-                        cart: []
                     })
                     .then((error) => {
                         if (error) {
@@ -87,30 +65,9 @@ const Signup = () => {
                             navigation.goBack();
                         } else {
                             alert('Đăng kí thành công');
-                            navigation.goBack();
                         }
                     });
 
-
-                // firestore()
-                //     .collection('User')
-                //     .doc(firebase.auth().currentUser.uid)
-                //     .set({
-                //         name: name,
-                //         email: email,
-                //         phone: phone,
-                //         password: password,
-                //         cart: [],
-                //     })
-                //     .then((error) => {
-                //         if (error) {
-                //             alert('Đăng kí không thành công');
-                //             navigation.goBack();
-                //         } else {
-                //             alert('Đăng kí thành công');
-                //             navigation.goBack();
-                //         }
-                //     });
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
@@ -137,23 +94,9 @@ const Signup = () => {
                 <Text style={{ marginTop: 50, alignSelf: 'center', fontSize: 24, fontWeight: '600', color: '#000' }}>
                     Create New Account
                 </Text>
-                <CustomTextInput
-                    placeholder={'Nhap Ten...'}
-                    value={name}
-                    onChangeText={txt => {
-                        setName(txt);
-                    }}
-                    icon={require('../images/user.png')}
-                />
-
-                {
-                    badName === true && (
-                        <Text style={{ marginTop: 10, marginLeft: 30, color: 'red' }}>Hay nhap Ten</Text>
-                    )
-                }
 
                 <CustomTextInput
-                    placeholder={'Nhap Email...'}
+                    placeholder={'Nhập email...'}
                     value={email}
                     onChangeText={txt => {
                         setEmail(txt);
@@ -168,23 +111,7 @@ const Signup = () => {
                 }
 
                 <CustomTextInput
-                    placeholder={'Nhap SDT...'}
-                    value={phone}
-                    keyboardType={'number-pad'}
-                    onChangeText={txt => {
-                        setPhone(txt);
-                    }}
-                    icon={require('../images/smartphone.png')}
-                />
-
-                {
-                    badPhone === true && (
-                        <Text style={{ marginTop: 10, marginLeft: 30, color: 'red' }}>Hay nhap SDT</Text>
-                    )
-                }
-
-                <CustomTextInput
-                    placeholder={'Nhap Password...'}
+                    placeholder={'Nhập mật khẩu...'}
                     value={password}
                     onChangeText={txt => {
                         setPassword(txt);
@@ -199,7 +126,7 @@ const Signup = () => {
                 }
 
                 <CustomTextInput
-                    placeholder={'Xac nhan Password...'}
+                    placeholder={'Xác nhận mật khẩu...'}
                     value={confirmPassword}
                     onChangeText={txt => {
                         setConfirmPassword(txt);
@@ -218,7 +145,7 @@ const Signup = () => {
                     bgColor={buttonDisabled ? '#8e8e8e' : '#000'}
                     textColor={'#fff'}
                     onPress={() => {
-                        signup1();
+                        signup();
                     }}
                     disabled={buttonDisabled}
                 />

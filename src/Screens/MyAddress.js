@@ -1,10 +1,11 @@
-import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteAddress } from '../redux/actions/Actions';
 import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/auth';
+import { Swipeable } from 'react-native-gesture-handler';
 
 const MyAddress = () => {
     const [listAddress, setAddress] = useState([])
@@ -14,6 +15,34 @@ const MyAddress = () => {
     const dispatch = useDispatch();
     const userId = firebase.auth().currentUser.uid;
     console.log(addressList);
+
+    const rightSwipe = () => {
+        return (
+            <View
+                style={{
+                    width: '100%',
+                    backgroundColor: 'red',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: 10,
+                    borderBottomWidth: 4,
+                    borderBottomColor: '#DDDDDD'
+                }}>
+                <Image
+                    source={require('../images/recyclebin.png')}
+                    style={{
+                        width: 40,
+                        height: 40,
+                        tintColor: '#fff',
+                    }} />
+            </View>
+        )
+    };
+
+    const onComponentOpen = (id) => {
+        database().ref('Address/' + userId + '/' + id).remove();
+        Alert.alert('Xóa thành công.')
+    }
 
     useEffect(() => {
         database()
@@ -45,9 +74,10 @@ const MyAddress = () => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         backgroundColor: '#AA0000'
+
                     }}>
                     <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15, color: 'yellow' }}>
-                        My Address
+                        Địa chỉ
                     </Text>
                 </View>
                 <TouchableOpacity
@@ -71,51 +101,51 @@ const MyAddress = () => {
                         style={{ width: 35, height: 35, tintColor: 'yellow' }} />
                 </TouchableOpacity>
 
-                <View style={{ height: 40, width: '100%', alignSelf: 'center', padding: 5 }}>
-                    <Text style={{ fontSize: 16, marginLeft: 5 }}>Địa chỉ</Text>
-                </View>
-
                 <FlatList
                     data={listAddress}
                     renderItem={({ item, index }) => {
                         return (
-                            <View
-                                style={{
-                                    width: '100%',
-                                    backgroundColor: '#EEEEEE',
-                                    justifyContent: 'space-between',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    padding: 10,
-                                }}>
-                                <View>
-                                    <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'flex-start', alignItems: 'center' }}>
-                                        <Text style={{ color: 'black', fontSize: 18, fontWeight: '500' }}>{item.name}</Text>
-                                        <Text style={{ fontSize: 18 }}> | </Text>
-                                        <Text style={{ fontSize: 18 }}>{item.phone}</Text>
-                                    </View>
-                                    <Text style={{ color: 'black', marginBottom: 5 }}>{item.home}, {item.address}</Text>
-                                </View>
+                            <Swipeable
+                                renderRightActions={rightSwipe}
+                                onSwipeableOpen={() => {
+                                    onComponentOpen(item.idAdd);
+                                }}
+                            >
                                 <TouchableOpacity
-                                    style={{ padding: 7, marginRight: 20, backgroundColor: 'black', borderRadius: 5 }}
-                                    onPress={() => {
-                                        database().ref('AddAddress/' + userId + '/' + item.idAdd).remove();
+                                    style={{
+                                        width: '100%',
+                                        backgroundColor: '#fff',
+                                        justifyContent: 'space-between',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        padding: 10,
+                                        borderBottomWidth: 4,
+                                        borderBottomColor: '#DDDDDD'
                                     }}>
-                                    <Text style={{ color: '#fff' }}>Xóa</Text>
+                                    <View>
+                                        <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'flex-start', alignItems: 'center' }}>
+                                            <Text style={{ color: 'black', fontSize: 18, fontWeight: '500' }}>{item.name}</Text>
+                                            <Text style={{ fontSize: 18 }}> | </Text>
+                                            <Text style={{ fontSize: 18 }}>{item.phone}</Text>
+                                        </View>
+                                        <Text style={{ color: 'black', marginBottom: 5 }}>{item.home}, {item.address}</Text>
+                                    </View>
                                 </TouchableOpacity>
-                            </View>
+                            </Swipeable>
                         );
                     }}
                 />
 
                 <TouchableOpacity
                     style={{
+                        width: '100%',
                         marginRight: 20,
                         justifyContent: 'center',
                         alignItems: 'center',
                         padding: 7,
                         flexDirection: 'row',
-                        borderTopWidth: 0.2
+                        borderTopWidth: 0.2,
+                        backgroundColor: '#fff',
                     }}
                     onPress={() => {
                         navigation.navigate('AddAddress');
