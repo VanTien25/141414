@@ -1,103 +1,130 @@
 import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteAddress } from '../redux/actions/Actions';
-let addressList = [];
+import database from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/auth';
+
 const MyAddress = () => {
+    const [listAddress, setAddress] = useState([])
     const navigation = useNavigation();
     const isFocused = useIsFocused();
     const addressList = useSelector(state => state.AddressReducers);
     const dispatch = useDispatch();
+    const userId = firebase.auth().currentUser.uid;
     console.log(addressList);
+
+    useEffect(() => {
+        database()
+            .ref('Address/' + userId)
+            .on('value', snapshot => {
+                let array = []
+                snapshot.forEach(childSnapshot => {
+                    var item = childSnapshot.val();
+                    array.push({
+                        idAdd: childSnapshot.key,
+                        name: item.name,
+                        phone: item.phone,
+                        home: item.home,
+                        address: item.address,
+                    })
+                })
+                setAddress(array);
+            });
+    }, [])
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: '#DDDDDD' }}>
                 <View
                     style={{
                         width: '100%',
-                        height: 70,
-                        justifyContent: 'space-between',
+                        height: 60,
+                        justifyContent: 'center',
                         flexDirection: 'row',
                         alignItems: 'center',
                         backgroundColor: '#AA0000'
                     }}>
-                    <TouchableOpacity
-                        style={{
-                            justifyContent:'center',
-                            alignItems: 'center',
-                            marginLeft: 15,
-                            borderWidth: 1,
-                            borderRadius: 100,
-                            borderColor: 'yellow',
-                            width: 35,
-                            height: 35,
-                        }}
-                        onPress={() => {
-                            navigation.goBack();
-                        }}
-                    >
-                        <Image
-                            source={require('../images/back.png')}
-                            style={{ width: 24, height: 24, tintColor: 'yellow' }} />
-                    </TouchableOpacity>
-                    <Text style={{ fontWeight: '600', fontSize: 18, marginLeft: 15, color: 'yellow' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15, color: 'yellow' }}>
                         My Address
                     </Text>
-                    <TouchableOpacity
-                        style={{
-                            marginRight: 20,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderWidth: 1,
-                            borderColor: 'yellow',
-                            padding: 7,
-                            borderRadius: 10,
-                        }}
-                        onPress={() => {
-                            navigation.navigate('AddAddress');
-                        }}>
-                        <Text style={{ color: 'yellow' }}>Add Address</Text>
-                    </TouchableOpacity>
                 </View>
+                <TouchableOpacity
+                    style={{
+                        position: 'absolute',
+                        top: 15,
+                        left: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: 15,
+                        borderColor: 'yellow',
+                        width: 30,
+                        height: 30,
+                    }}
+                    onPress={() => {
+                        navigation.goBack();
+                    }}
+                >
+                    <Image
+                        source={require('../images/back.png')}
+                        style={{ width: 35, height: 35, tintColor: 'yellow' }} />
+                </TouchableOpacity>
+
+                <View style={{ height: 40, width: '100%', alignSelf: 'center', padding: 5 }}>
+                    <Text style={{ fontSize: 16, marginLeft: 5 }}>Địa chỉ</Text>
+                </View>
+
                 <FlatList
-                    data={addressList}
+                    data={listAddress}
                     renderItem={({ item, index }) => {
                         return (
                             <View
                                 style={{
                                     width: '100%',
-                                    borderWidth: 0.2,
-                                    borderColor: '#8e8e8e',
-                                    alignSelf: 'center',
+                                    backgroundColor: '#EEEEEE',
                                     justifyContent: 'space-between',
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    borderBottomWidth: 1,
-                                    borderBottomColor: '#AA0000',
+                                    padding: 10,
                                 }}>
                                 <View>
-                                    <Text style={{ marginLeft: 20, color: 'black' }}>
-                                        {'City: ' + item.city}</Text>
-                                    <Text style={{ marginLeft: 20, color: 'black' }}>
-                                        {'Building: ' + item.building}
-                                    </Text>
-                                    <Text style={{ marginLeft: 20, color: 'black', marginBottom: 10 }}>
-                                        {'Pincode: ' + item.pincode}
-                                    </Text>
+                                    <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'flex-start', alignItems: 'center' }}>
+                                        <Text style={{ color: 'black', fontSize: 18, fontWeight: '500' }}>{item.name}</Text>
+                                        <Text style={{ fontSize: 18 }}> | </Text>
+                                        <Text style={{ fontSize: 18 }}>{item.phone}</Text>
+                                    </View>
+                                    <Text style={{ color: 'black', marginBottom: 5 }}>{item.home}, {item.address}</Text>
                                 </View>
                                 <TouchableOpacity
                                     style={{ padding: 7, marginRight: 20, backgroundColor: 'black', borderRadius: 5 }}
                                     onPress={() => {
-                                        dispatch(deleteAddress(index));
+                                        database().ref('AddAddress/' + userId + '/' + item.idAdd).remove();
                                     }}>
-                                    <Text style={{ color: '#fff' }}>Delete address</Text>
+                                    <Text style={{ color: '#fff' }}>Xóa</Text>
                                 </TouchableOpacity>
                             </View>
                         );
                     }}
                 />
+
+                <TouchableOpacity
+                    style={{
+                        marginRight: 20,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: 7,
+                        flexDirection: 'row',
+                        borderTopWidth: 0.2
+                    }}
+                    onPress={() => {
+                        navigation.navigate('AddAddress');
+                    }}>
+                    <Image
+                        source={require('../images/add.png')}
+                        style={{ width: 25, height: 25, marginRight: 5, tintColor: 'red' }} />
+                    <Text style={{ color: 'red', fontSize: 16 }}>Thêm địa chỉ mới</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

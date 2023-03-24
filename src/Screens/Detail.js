@@ -5,14 +5,14 @@ import { useNavigation } from '@react-navigation/native'
 import CountQuantity from '../common/CountQuantity';
 import Size from '../common/Size';
 import CommonButton from '../common/CommonButton';
-import AddDetail from '../common/AddDetail';
 import { Alert } from 'react-native';
 import database, { firebase } from '@react-native-firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, addToWishlist } from '../redux/actions/Actions';
 import firestore from '@react-native-firebase/firestore';
 
-const Detail = ({ route, navigation }) => {
+const Detail = ({ route }) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [type, setType] = useState('');
   let [quantity, setQuantity] = useState(1);
@@ -39,25 +39,14 @@ const Detail = ({ route, navigation }) => {
   }
 
   const onAddToCart = (itemPro) => {
-    // firestore()
-    //   .collection('Order')
-    //   .doc(userId)
-    //   .add(
-    //     itemPro,
-    //   )
-    //   .then(() => {
-    //     console.log('User added!');
-    //   });
-
-
     database()
       .ref('Order/' + userId)
       .push()
       .set({
         itemPro,
       })
-      .then(() => console.log('Data set.'));
-    dispatch(addItemToCart(itemPro));
+      .then(() => alert('Thêm vào giỏ hàng thành công'));
+    // dispatch(addItemToCart(itemPro));
   };
 
 

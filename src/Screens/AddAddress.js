@@ -5,12 +5,17 @@ import CustomTextInput from '../common/CustomTextInput';
 import CommonButton from '../common/CommonButton';
 import { useDispatch } from 'react-redux';
 import { addAddress } from '../redux/actions/Actions';
+import { firebase } from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
 const AddAddress = () => {
     const navigation = useNavigation();
-    const [city, setCity] = useState('');
-    const [building, setBuilding] = useState('');
-    const [pin, setPin] = useState('');
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [homeInfo, setHomeInfo] = useState('');
+    const [address, setAddress] = useState('');
+    // const [pin, setPin] = useState('');
+    const userId = firebase.auth().currentUser.uid;
     const dispatch = useDispatch();
     return (
         <View style={{ flex: 1 }}>
@@ -27,7 +32,7 @@ const AddAddress = () => {
                         marginLeft: 20,
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderWidth: 0.2,
+                        borderWidth: 1.5,
                         padding: 7,
                         borderRadius: 10,
                     }}
@@ -41,40 +46,55 @@ const AddAddress = () => {
                 </TouchableOpacity>
             </View>
             <CustomTextInput
-                placeholder={'Enter City Name'}
-                value={city}
+                placeholder={'Họ và tên'}
+                value={name}
                 onChangeText={txt => {
-                    setCity(txt);
+                    setName(txt);
                 }}
-                icon={require('../images/cityscape.png')}
+                icon={require('../images/name.png')}
             />
             <CustomTextInput
-                placeholder={'Enter Building Name'}
-                value={building}
-                onChangeText={txt => {
-                    setBuilding(txt);
-                }}
-                icon={require('../images/building.png')}
-            />
-            <CustomTextInput
-                placeholder={'Enter Pincode Name'}
-                pa
-                value={pin}
+                placeholder={'Số điện thoại'}
                 keyboardType={'number-pad'}
+                value={phone}
                 onChangeText={txt => {
-                    setPin(txt);
+                    setPhone(txt);
                 }}
-                icon={require('../images/pincode.png')}
+                icon={require('../images/smartphone.png')}
+            />
+            <CustomTextInput
+                placeholder={'Địa chỉ nhà'}
+                value={homeInfo}
+                onChangeText={txt => {
+                    setHomeInfo(txt);
+                }}
+                icon={require('../images/home.png')}
+            />
+            <CustomTextInput
+                placeholder={'Tỉnh/Thành phố, Quận/Huyện'}
+                value={address}
+                onChangeText={txt => {
+                    setAddress(txt);
+                }}
+                icon={require('../images/address.png')}
             />
             <CommonButton
                 title={'Save Address'}
                 bgColor={'#000'}
                 textColor={'#fff'}
                 onPress={() => {
-                    if (city !== '' && building !== '' && pin !== '') {
-                        dispatch(
-                            addAddress({ city: city, building: building, pincode: pin }),
-                        );
+                    if (name !== '' && phone !== '' && address !== '') {
+                        database()
+                            .ref('Address/' + userId)
+                            .push()
+                            .set({
+                                name: name,
+                                phone: phone,
+                                home: homeInfo,
+                                address: address,
+                                
+                            })
+                            .then(() => console.log('Data set.'));
                         navigation.goBack();
                     }
                 }}
