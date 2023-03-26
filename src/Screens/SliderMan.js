@@ -1,17 +1,21 @@
 import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import database from '@react-native-firebase/database';
 
 const SliderMan = () => {
-    const [image, setImage] = useState('');
+    const [title, setTitle] = useState('');
+    const [value, setValue] = useState('');
+    const [price, setPrice] = useState('');
 
     const addSlider = () => {
         database()
-            .ref('Slider/')
+            .ref('Voucher/')
             .push()
             .set({
-                image,
+                title,
+                value,
+                price
             })
             .then((error) => {
                 if (error) {
@@ -27,13 +31,26 @@ const SliderMan = () => {
         <ScrollView style={{ flex: 1 }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 15, marginBottom: 20 }}>
                 <Text>Thêm Slider</Text>
+                <TextInput
+                    onChangeText={text => setTitle(text)}
+                    keyboardType="default"
+                    value={title}
+                    style={{ width: '60%', height: 40, marginTop: 15, borderWidth: 1, borderRadius: 20, justifyContent: 'center', alignItems: 'center', padding: 10 }}
+                    placeholder='title' />
 
                 <TextInput
-                    onChangeText={text => setImage(text)}
+                    onChangeText={text => setValue(text)}
                     keyboardType="default"
-                    value={image}
+                    value={value}
                     style={{ width: '60%', height: 40, marginTop: 15, borderWidth: 1, borderRadius: 20, justifyContent: 'center', alignItems: 'center', padding: 10 }}
-                    placeholder='image' />
+                    placeholder='value' />
+
+                <TextInput
+                    onChangeText={text => setPrice(text)}
+                    keyboardType="default"
+                    value={price}
+                    style={{ width: '60%', height: 40, marginTop: 15, borderWidth: 1, borderRadius: 20, justifyContent: 'center', alignItems: 'center', padding: 10 }}
+                    placeholder='price' />
 
 
                 <TouchableOpacity

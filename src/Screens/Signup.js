@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native'
 import { ScrollView } from 'react-native'
 import database from '@react-native-firebase/database';
 import auth, { firebase } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 
 const Signup = () => {
     const navigation = useNavigation();
@@ -58,6 +57,7 @@ const Signup = () => {
                     .set({
                         email: email,
                         password: password,
+                        myStar: "0"
                     })
                     .then((error) => {
                         if (error) {
@@ -162,7 +162,7 @@ const Signup = () => {
                     onPress={() => {
                         navigation.goBack();
                     }}>
-                    Already have an account?
+                    Bạn đã có tài khoản
                 </Text>
             </View>
         </ScrollView>

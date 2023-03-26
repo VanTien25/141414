@@ -23,6 +23,8 @@ import ProductsManager from './Screens/ProductsManager';
 import CategoriesMan from './Screens/CategoriesMan';
 import OrderCustom from './Screens/OrderCustom'
 import SliderMan from './Screens/SliderMan'
+import VoucherStore from './Screens/VoucherStore'
+import MyOrder from './Screens/MyOrder'
 
 const Stack = createStackNavigator();
 
@@ -129,6 +131,16 @@ const AppNavigator = () => {
                 options={{ headerShown: false }}
                 name="OrderCustom"
                 component={OrderCustom} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="VoucherStore"
+                component={VoucherStore} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="MyOrder"
+                component={MyOrder} />
 
         </Stack.Navigator>
     )

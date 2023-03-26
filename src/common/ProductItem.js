@@ -1,11 +1,11 @@
-import { View, Text, ImageBackground } from 'react-native'
+import { View, Text, ImageBackground, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
-import { Image } from 'react-native'
-import { TouchableOpacity } from 'react-native';
-
+import database from '@react-native-firebase/database';
 import { useNavigation } from '@react-navigation/native';
+import { firebase } from '@react-native-firebase/auth';
 
 const ProductItem = ({ item, index }) => {
+    const idUser = firebase.auth().currentUser.uid;
     const navigation = useNavigation();
 
     return (
@@ -21,7 +21,6 @@ const ProductItem = ({ item, index }) => {
                         size: item.size,
                         star: item.star,
                         desc: item.desc,
-
                     })
             }}
             style={{
@@ -77,6 +76,18 @@ const ProductItem = ({ item, index }) => {
                     </Text>
                 </View>
                 <TouchableOpacity
+                    onPress={() => {
+                        database().ref('Wishlist/' + idUser).push(item.id).set({
+                            category: item.category,
+                            title: item.title,
+                            image: item.image,
+                            price: item.price,
+                            size: item.size,
+                            star: item.star,
+                            desc: item.desc,
+                        })
+                            .then(() => alert('Đã thêm vào giỏ hàng.'));
+                    }}
                     style={{
                         width: 40,
                         elevation: 5,
@@ -105,8 +116,7 @@ const ProductItem = ({ item, index }) => {
                         position: 'absolute',
                         top: 10,
                         left: 10,
-                    }}
-                >
+                    }}>
                     <Text style={{
                         textAlign: 'center',
                         fontWeight: 'bold',

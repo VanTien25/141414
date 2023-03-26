@@ -1,17 +1,12 @@
 import { View, Text, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Loader from '../common/Loader'
-import { TouchableOpacity } from 'react-native'
 import Main from '../bottom/Main'
 import Star from '../bottom/Star'
 import Cart from '../bottom/Cart'
 import Wishlist from '../bottom/Wishlist'
 import Profile from '../bottom/Profile'
-import { useSelector } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Header } from '@react-navigation/stack'
-import { firebase } from '@react-native-firebase/auth';
 
 const Home = () => {
   const Tab = createBottomTabNavigator();

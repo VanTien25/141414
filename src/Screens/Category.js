@@ -5,12 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import CategoryCart from '../common/CategoryCart';
 
 const Category = ({ route }) => {
-
-  const [dataPro, setData] = useState(route.params.listProduct);
+  const [dataCat, setData] = useState(route.params.listProduct);
   const [nameCat, setNameCat] = useState(route.params.name);
-
-  // console.log(data);
-
   const navigation = useNavigation();
 
   return (
@@ -53,7 +49,7 @@ const Category = ({ route }) => {
 
       <ScrollView>
         {
-          dataPro.map((item) => {
+          dataCat.map((item) => {
             if (item.category == nameCat) {
               return (<CategoryCart item={item} />)
             }

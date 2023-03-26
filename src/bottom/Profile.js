@@ -72,7 +72,7 @@ const Profile = () => {
         onPress={() => {
           navigation.navigate('MyAddress');
         }}>
-        <Text style={{ color: 'black' }}>My Address</Text>
+        <Text style={{ color: 'black' }}>Thông tin địa chỉ của tôi</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{
@@ -84,9 +84,23 @@ const Profile = () => {
           justifyContent: 'center',
         }}
         onPress={() => {
-          navigation.navigate('Orders');
+          navigation.navigate('MyOrder');
         }}>
-        <Text style={{ color: 'black' }}>My Orders</Text>
+        <Text style={{ color: 'black' }}>Đơn hàng của tôi</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          width: '90%',
+          alignSelf: 'center',
+          height: 50,
+          borderBottomWidth: 0.3,
+          borderBottomColor: '#8e8e8e',
+          justifyContent: 'center',
+        }}
+        onPress={() => {
+          navigation.navigate('VoucherStore');
+        }}>
+        <Text style={{ color: 'black' }}>Kho Voucher</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {

@@ -49,6 +49,7 @@ const Cart = () => {
           var item = childSnapshot.val();
           arr.push({
             id: childSnapshot.key,
+            idProduct: item.itemPro.id,
             title: item.itemPro.title,
             price: item.itemPro.price,
             image: item.itemPro.image,
@@ -121,7 +122,7 @@ const Cart = () => {
         />
       ) : (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>No Items Added in Cart</Text>
+          <Text>Không có sản phẩm nào trong giỏ hàng</Text>
         </View>
       )}
       {dataCart.length > 0 ? (
@@ -156,7 +157,8 @@ const Cart = () => {
               navigation.navigate('Checkout', {
                 total: total,
                 totalStar: totalStar,
-                dataCart
+                dataCart,
+
               });
             }}
           >

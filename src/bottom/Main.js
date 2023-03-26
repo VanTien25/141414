@@ -1,12 +1,9 @@
-import { View, Text, Image, FlatList, TouchableOpacity, ScrollView, StatusBar, SafeAreaView, VirtualizedList, Dimensions } from 'react-native'
+import { View, Text, Image, FlatList, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import ProductItem from '../common/ProductItem';
 import Search from '../common/Search';
 import database from '@react-native-firebase/database';
-import firestore from '@react-native-firebase/firestore';
-
 import { useNavigation } from '@react-navigation/native';
-import { SliderBox } from 'react-native-image-slider-box';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -20,30 +17,6 @@ const Main = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    //   firestore()
-    //     .collection('Slider')
-    //     .get()
-    //     .then(querySnapshot => {
-    //       let listImg = [];
-    //       querySnapshot.forEach(documentSnapshot => {
-    //         var childData = documentSnapshot.data();
-    //         listImg.push(childData);
-    //       });
-    //       setImg(listImg);
-    //     });
-
-    //   firestore()
-    //     .collection('Category')
-    //     .get()
-    //     .then(querySnapshot => {
-    //       let listCategories = [];
-    //       querySnapshot.forEach(documentSnapshot => {
-    //         var childData = documentSnapshot.data();
-    //         listCategories.push(childData);
-    //       });
-    //       setCategories(listCategories)
-    //     });
-
     database().ref('Category/').on('value', (snapshot) => {
       let categories = [];
       snapshot.forEach(childSnapshot => {
@@ -54,22 +27,6 @@ const Main = () => {
       });
       setCategories(categories);
     });
-
-
-    // firestore()
-    //   .collection('Product')
-    //   .get()
-    //   .then(querySnapshot => {
-    //     let productList = [];
-    //     querySnapshot.forEach(documentSnapshot => {
-    //       productList.push({
-    //         id: documentSnapshot.id,
-    //         ...documentSnapshot.data(),
-    //       })
-    //     });
-    //     setListProduct(productList)
-    //     // console.log(productList)
-    //   });
 
     database().ref('Products/').on('value', (snapshot) => {
       let productList = [];
@@ -86,24 +43,34 @@ const Main = () => {
           desc: childData.desc,
         });
       });
-      // 
       setListProduct(productList);
+    });
+
+    database().ref('Slider/').on('value', (snapshot) => {
+      let arr = [];
+      snapshot.forEach(childSnapshot => {
+        var item = childSnapshot.val();
+        arr.push({
+          id: childSnapshot.key,
+          image: item.image
+        });
+      });
+      setImg(arr);
     });
   }, [])
 
-  // useEffect(() => {
-  //   if (img.length > 0) {
-  //     let index = 0;
-  //     setInterval(() => {
-  //       stepAutoImg.current.scrollTo({ x: index * screenWidth, y: 0, animated: true });
-  //       index += 1;
-  //       if (index === img.length) {
-  //         index = 0;
-  //       }
-  //     }, 3000);
-  //   }
-
-  // }, [img])
+  useEffect(() => {
+    if (img.length > 0) {
+      let index = 0;
+      setInterval(() => {
+        stepAutoImg.current.scrollTo({ x: index * screenWidth, y: 0, animated: true });
+        index += 1;
+        if (index === img.length) {
+          index = 0;
+        }
+      }, 3000);
+    }
+  }, [])
 
 
   return (
@@ -114,21 +81,7 @@ const Main = () => {
 
           {/* Banner */}
           <View style={{ width: '94%', height: 170, marginTop: 10, alignSelf: 'center', elevation: 5 }}>
-            <SliderBox
-              images={img}
-              dotColor="red"
-              inactiveDotColor="black"
-              dotStyle={{
-                height: 15,
-                width: 15,
-                borderRadius: 100,
-              }}
-              imageLoadingColor="black"
-              autoplay={true}
-              autoplayInterval={3000}
-              circleLoop={true}
-            />
-            {/* <ScrollView
+            <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{ width: screenWidth * img.length, height: 180 }}
@@ -151,8 +104,7 @@ const Main = () => {
                   )
                 })
               }
-
-            </ScrollView> */}
+            </ScrollView>
           </View>
 
           {/* List Button Category */}

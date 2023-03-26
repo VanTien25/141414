@@ -1,23 +1,18 @@
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, ImageBackground, Image, TextInput, FlatList } from 'react-native'
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, ImageBackground, Image} from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import { useNavigation } from '@react-navigation/native'
-import CountQuantity from '../common/CountQuantity';
-import Size from '../common/Size';
-import CommonButton from '../common/CommonButton';
-import { Alert } from 'react-native';
 import database, { firebase } from '@react-native-firebase/database';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart, addToWishlist } from '../redux/actions/Actions';
-import firestore from '@react-native-firebase/firestore';
+import Size from '../common/Size';
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const [type, setType] = useState('');
   let [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(route.params.size);
-  const userId = firebase.auth().currentUser.uid;
+  const idUser = firebase.auth().currentUser.uid;
+  const total = size.reduce((accumulator, current) => accumulator + current.quantity, 0);
+
 
   const itemPro = {
     id: route.params.id,
@@ -40,13 +35,12 @@ const Detail = ({ route }) => {
 
   const onAddToCart = (itemPro) => {
     database()
-      .ref('Cart/' + userId)
+      .ref('Cart/' + idUser)
       .push()
       .set({
         itemPro,
       })
       .then(() => alert('Thêm vào giỏ hàng thành công'));
-    // dispatch(addItemToCart(itemPro));
   };
 
 
@@ -117,77 +111,33 @@ const Detail = ({ route }) => {
 
 
         {/* Price */}
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginLeft: 15,
-            color: 'red',
-            textAlign: 'left',
-          }}>
-          {route.params.price} VNĐ
-        </Text>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              marginLeft: 15,
+              color: 'red',
+              textAlign: 'left',
+            }}>
+            {route.params.price} VNĐ
+          </Text>
+
+          <Text
+            style={{
+              fontSize: 18,
+              marginRight: 15,
+              textAlign: 'left',
+            }}>
+            SL: {total}
+          </Text>
+        </View>
+
 
         <View style={{ height: 1, borderWidth: 0.65, borderColor: '#BBBBBB', marginTop: 10, marginBottom: 10 }} />
 
         {/* Size */}
-        <View style={{
-          height: 80, flexDirection: 'row', justifyContent: 'space-between',
-          alignItems: 'center', padding: 15
-        }}>
-          <Text style={{ fontSize: 20, color: 'black' }}>Size: </Text>
-          {
-            size.map((item) => {
-              if (item.quantity <= 0) {
-                return (
-                  <View
-                    key={item.name}
-                    style={{
-                      width: 60,
-                      height: 40,
-                      borderRadius: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      alignSelf: 'center',
-                      marginLeft: 15,
-                      backgroundColor: '#CCCCCC'
-                    }}
-                  >
-                    <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
-                  </View>
-                );
-              } else {
-                return (
-                  <TouchableOpacity
-                    key={item.name}
-                    onPress={() => setType(item.name)}
-                    style={type === item.name ? {
-                      width: 60,
-                      height: 40,
-                      borderRadius: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      alignSelf: 'center',
-                      marginLeft: 15,
-                      backgroundColor: '#009900'
-                    } : {
-                      width: 60,
-                      height: 40,
-                      borderRadius: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      alignSelf: 'center',
-                      marginLeft: 15,
-                      backgroundColor: '#BB0000'
-                    }}
-                  >
-                    <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
-                  </TouchableOpacity>
-                );
-              }
-            })
-          }
-        </View>
+        <Size item={item}/>
 
         <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 5, marginBottom: 10 }} />
 

@@ -8,20 +8,37 @@ import {
     ImageBackground,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import CustomButton from '../common/CommonButton';
 import { useNavigation } from '@react-navigation/native';
-import { addOrder } from '../redux/actions/Actions';
 import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/auth';
+import { Alert } from 'react-native';
 
 const Checkout = ({ route }) => {
-
+    const [total, setTotal] = useState(route.params.total);
     const userId = firebase.auth().currentUser.uid;
     const [listItem, setListItem] = useState([]);
+    const [type, setType] = useState('');
+    const [addressPay, setAddressPay] = useState([]);
     const [listAddress, setListAddress] = useState([]);
+    const [listVoucher, setListVoucher] = useState([]);
     const navigation = useNavigation();
     const listProduct = route.params.dataCart;
+
+    var idProduct = listProduct.map((item) => {
+        database()
+            .ref('Product/' + userId + '/' + item.id)
+            .on('value', snapshot => {
+                let arr = [];
+                snapshot.forEach(childSnapshot => {
+                    var item = childSnapshot.val();
+                    arr.push({
+                        item,
+                    })
+                    console.log(arr);
+                })
+            });
+    })
+
 
     useEffect(() => {
         database()
@@ -45,7 +62,30 @@ const Checkout = ({ route }) => {
                 })
                 setListAddress(arr);
             });
+
+        database()
+            .ref('Myvoucher/' + userId)
+            .on('value', snapshot => {
+                let arr = [];
+                snapshot.forEach(childSnapshot => {
+                    var item = childSnapshot.val();
+                    arr.push(item);
+                })
+                setListVoucher(arr);
+            });
     }, []);
+
+    const chooseAddress = (item) => {
+        setAddressPay(item);
+    }
+
+    const totalCoin = (value) => {
+        if (route.params.total - value >= 0) {
+            route.params.total - value
+            setTotal(route.params.total - value);
+        }
+    }
+
 
     return (
         <View style={{ flex: 1, backgroundColor: '#DDDDDD' }}>
@@ -90,8 +130,21 @@ const Checkout = ({ route }) => {
             {
                 listAddress.map((item) => {
                     return (
-                        <View
-                            style={{
+                        <TouchableOpacity
+                            onPress={() => setType(item)}
+                            style={type === item ? {
+                                width: '100%',
+                                backgroundColor: '#fff',
+                                justifyContent: 'space-between',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                padding: 10,
+                                borderBottomWidth: 4,
+                                borderWidth: 1,
+                                borderColor: 'red',
+                                borderBottomColor: '#DDDDDD',
+                                paddingLeft: 15
+                            } : {
                                 width: '100%',
                                 backgroundColor: '#fff',
                                 justifyContent: 'space-between',
@@ -110,7 +163,7 @@ const Checkout = ({ route }) => {
                                 </View>
                                 <Text style={{ marginBottom: 5, fontSize: 20 }}>{item.home}, {item.address}</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     )
                 })
             }
@@ -171,6 +224,40 @@ const Checkout = ({ route }) => {
                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thanh toán khi nhận hàng</Text>
             </View>
 
+            <View style={{
+                width: '100%', height: 140,
+                justifyContent: 'space-between',
+                backgroundColor: '#fff', borderBottomWidth: 4, borderBottomColor: '#DDDDDD'
+            }}>
+                <Text style={{ fontSize: 20, marginLeft: 10 }}>Danh sách voucher</Text>
+                <View style={{ width: '100%', height: 100 }}>
+                    <FlatList
+                        data={listVoucher}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        totalCoin(item.value);
+                                    }}
+                                    style={{
+                                        width: 110,
+                                        height: 90,
+                                        borderRadius: 20,
+                                        borderWidth: 1,
+                                        backgroundColor: '#FFFF99',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginLeft: 10
+                                    }}>
+                                    <Text style={{ fontSize: 14, fontWeight: 'bold', color: 'red' }}>{item.title}</Text>
+                                </TouchableOpacity>
+                            )
+                        }} />
+                </View>
+            </View>
+
             <View
                 style={{
                     position: 'absolute',
@@ -191,21 +278,70 @@ const Checkout = ({ route }) => {
                     paddingRight: 15
                 }}>
                     <Text style={{ fontSize: 18 }}>Tổng thanh toán</Text>
-                    <Text style={{ fontSize: 20, fontWeight: '500', color: 'red' }}>₫{route.params.total}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '500', color: 'red' }}>₫{total}</Text>
                 </View>
-                <TouchableOpacity
-                    onPress={() => {
-                        addToPay();
-                    }}
-                    style={{
-                        width: '25%',
-                        height: '100%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: '#AA0000'
-                    }}>
-                    <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>Đặt hàng</Text>
-                </TouchableOpacity>
+                {
+                    type === '' ? (
+                        <View
+                            onPress={() => {
+                                database()
+                                    .ref('Payment/' + userId)
+                                    .push()
+                                    .set({
+                                        address: addressPay,
+                                        item: listProduct,
+                                        totalStar: route.params.totalStar,
+                                        total: total,
+                                    })
+                                    .then(() =>
+                                        alert('Thanh toán thành công.'),
+                                        navigation.navigate('Main')
+                                    );
+                            }}
+                            style={{
+                                width: '25%',
+                                height: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: '#AA0000'
+                            }}>
+                            <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>Đặt hàng</Text>
+                        </View>
+                    ) : (
+                        <TouchableOpacity
+                            onPress={() => {
+                                database()
+                                    .ref('Payment/' + userId)
+                                    .push()
+                                    .set({
+                                        address: type,
+                                        item: listProduct,
+                                        totalStar: route.params.totalStar,
+                                        total: total,
+                                    })
+                                    .then(() => {
+                                        alert('Đặt hàng thành công.');
+
+                                    });
+                                database()
+                                    .ref('User/' + userId)
+                                    .update({
+                                        myStar: route.params.totalStar
+                                    })
+                                    .then(() => console.log('Data updated.'));
+                                database().ref('Cart/' + userId).remove();
+                            }}
+                            style={{
+                                width: '25%',
+                                height: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: '#AA0000'
+                            }}>
+                            <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>Đặt hàng</Text>
+                        </TouchableOpacity>
+                    )
+                }
             </View>
 
 

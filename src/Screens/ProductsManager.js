@@ -17,36 +17,25 @@ const ProductsManager = () => {
 
     const addProduct = () => {
         database()
-            .ref('Products/')
+            .ref('CategoryCustom/')
             .push()
             .set({
                 image: image,
-                title: "Hoodies Gey",
-                price: "240000",
                 size: [
                     {
                         "name": "S",
-                        "quantity": 100
                     },
                     {
                         "name": "M",
-                        "quantity": 100
                     },
                     {
                         "name": "L",
-                        "quantity": 100
                     },
                     {
                         "name": "XL",
-                        "quantity": 100
                     }
                 ],
-                category: "Hoodie",
-                star: "40",
-                desc: "quá là đẹp luôn, vừa rẻ, mặc vừa mát, không tốn tiền mua",
-                cart:[
-
-                ]
+                star: "20",
             })
             .then((error) => {
                 if (error) {

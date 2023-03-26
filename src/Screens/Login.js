@@ -55,7 +55,7 @@ const Login = () => {
       />
 
       <Text style={{ marginTop: 10, alignSelf: 'center', fontSize: 24, fontWeight: '800', color: '#fff' }}>
-        Login
+        Đăng nhập
       </Text>
       <CustomTextInput
         placeholder={'Nhập email...'}
@@ -99,7 +99,7 @@ const Login = () => {
         onPress={() => {
           navigation.navigate('ForgotPass');
         }}>
-        Forgot Password.
+        Nhớ mật khẩu
       </Text>
 
       <CommonButton
@@ -122,7 +122,7 @@ const Login = () => {
         onPress={() => {
           navigation.navigate('Signup');
         }}>
-        Create New Account.
+        Tạo tài khoản mới
       </Text>
       <Loader modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </View>
