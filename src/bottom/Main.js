@@ -75,12 +75,11 @@ const Main = () => {
 
   return (
     <>
-      <Search />
-      <ScrollView style={{ flex: 1, marginTop: 10 }}>
+      <ScrollView style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
 
           {/* Banner */}
-          <View style={{ width: '94%', height: 170, marginTop: 10, alignSelf: 'center', elevation: 5 }}>
+          <View style={{ width: '100%', height: 180, alignSelf: 'center' }}>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -99,8 +98,7 @@ const Main = () => {
                       style={{
                         width: screenWidth,
                         height: '100%',
-                      }}
-                    />
+                      }} />
                   )
                 })
               }
@@ -157,6 +155,7 @@ const Main = () => {
           </View>
         </View>
       </ScrollView>
+      <Search />
     </>
   );
 };

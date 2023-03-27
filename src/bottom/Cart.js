@@ -2,12 +2,9 @@ import { View, Text, FlatList, TouchableOpacity, Image, ImageBackground, Modal, 
 import React, { useEffect, useRef, useState } from 'react';
 import CommonButton from '../common/CommonButton';
 import { Swipeable } from 'react-native-gesture-handler';
-
 import { useNavigation } from '@react-navigation/native';
-import CountQuantity from '../common/CountQuantity';
 import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/auth';
-import { Alert } from 'react-native';
 
 const Cart = () => {
   const [dataCart, setDataCart] = useState([]);

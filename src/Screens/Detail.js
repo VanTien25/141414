@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, ImageBackground, Image} from 'react-native'
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, ImageBackground, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import { useNavigation } from '@react-navigation/native'
@@ -12,6 +12,7 @@ const Detail = ({ route }) => {
   const [size, setSize] = useState(route.params.size);
   const idUser = firebase.auth().currentUser.uid;
   const total = size.reduce((accumulator, current) => accumulator + current.quantity, 0);
+  console.log(size);
 
 
   const itemPro = {
@@ -111,7 +112,7 @@ const Detail = ({ route }) => {
 
 
         {/* Price */}
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text
             style={{
               fontSize: 20,
@@ -137,7 +138,62 @@ const Detail = ({ route }) => {
         <View style={{ height: 1, borderWidth: 0.65, borderColor: '#BBBBBB', marginTop: 10, marginBottom: 10 }} />
 
         {/* Size */}
-        <Size item={item}/>
+        <View style={{
+          height: 80, flexDirection: 'row', justifyContent: 'space-between',
+          alignItems: 'center', padding: 15
+        }}>
+          <Text style={{ fontSize: 20, color: 'black' }}>Size: </Text>
+          {
+            size.map((item) => {
+              if (item.quantity <= 0) {
+                return (
+                  <View
+                    key={item.name}
+                    style={{
+                      width: 60,
+                      height: 40,
+                      borderRadius: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      marginLeft: 15,
+                      backgroundColor: '#CCCCCC'
+                    }}
+                  >
+                    <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
+                  </View>
+                );
+              } else {
+                return (
+                  <TouchableOpacity
+                    key={item.name}
+                    onPress={() => setType(item.name)}
+                    style={type === item.name ? {
+                      width: 60,
+                      height: 40,
+                      borderRadius: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      marginLeft: 15,
+                      backgroundColor: '#009900'
+                    } : {
+                      width: 60,
+                      height: 40,
+                      borderRadius: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      marginLeft: 15,
+                      backgroundColor: '#BB0000'
+                    }}>
+                    <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
+                  </TouchableOpacity>
+                );
+              }
+            })
+          }
+        </View>
 
         <View style={{ height: 1, borderWidth: 0.5, borderColor: '#BBBBBB', marginTop: 5, marginBottom: 10 }} />
 
