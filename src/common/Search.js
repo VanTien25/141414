@@ -17,16 +17,20 @@ const Search = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
             }}>
-            <View style={{
-                width: '70%',
-                height: '90%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: '#fff',
-                borderRadius: 10,
-                marginLeft: 15
-            }}>
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('SearchScreen')
+                }}
+                style={{
+                    width: '70%',
+                    height: '90%',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: '#fff',
+                    borderRadius: 10,
+                    marginLeft: 15
+                }}>
                 <Text style={{ color: 'red', marginLeft: 20, fontSize: 15 }}>Bạn muốn tìm gì?</Text>
                 <TouchableOpacity
                     style={{
@@ -42,7 +46,7 @@ const Search = () => {
                             tintColor: '#222222'
                         }} />
                 </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate('OrderCustom')
