@@ -26,6 +26,7 @@ import SliderMan from './Screens/SliderMan'
 import VoucherStore from './Screens/VoucherStore'
 import MyOrder from './Screens/MyOrder'
 import SearchScreen from './Screens/SearchScreen'
+import Payment from './Screens/Payment'
 
 const Stack = createStackNavigator();
 
@@ -147,6 +148,11 @@ const AppNavigator = () => {
                 options={{ headerShown: false }}
                 name="SearchScreen"
                 component={SearchScreen} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Payment"
+                component={Payment} />
 
         </Stack.Navigator>
     )

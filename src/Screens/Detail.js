@@ -12,7 +12,6 @@ const Detail = ({ route }) => {
   const [size, setSize] = useState(route.params.size);
   const idUser = firebase.auth().currentUser.uid;
   const total = size.reduce((accumulator, current) => accumulator + current.quantity, 0);
-  console.log(size);
 
 
   const itemPro = {
@@ -42,6 +41,7 @@ const Detail = ({ route }) => {
         itemPro,
       })
       .then(() => alert('Thêm vào giỏ hàng thành công'));
+    navigation.navigate('Cart');
   };
 
 

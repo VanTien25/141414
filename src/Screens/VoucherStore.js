@@ -10,15 +10,17 @@ const VoucherStore = () => {
     const idUser = firebase.auth().currentUser.uid;
     const [listVoucher, setListVoucher] = useState([]);
     const navigation = useNavigation();
-    console.log(listVoucher);
 
     const rightSwipe = () => {
         return (
             <View
                 style={{
-                    width: '100%', height: 100, borderBottomWidth: 3,
-                    backgroundColor: 'red', borderBottomColor: '#DDDDDD',
-                    justifyContent: 'center', alignItems: 'center',
+                    marginBottom: 10,
+                    width: '100%',
+                    flexDirection: 'row',
+                    backgroundColor: 'red',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}>
                 <Image
                     source={require('../images/recyclebin.png')}
@@ -27,7 +29,7 @@ const VoucherStore = () => {
                         height: 40,
                         tintColor: '#fff',
                     }} />
-            </View>
+            </View >
         )
     };
 
@@ -44,7 +46,11 @@ const VoucherStore = () => {
                 snapshot.forEach(childSnapshot => {
                     var item = childSnapshot.val();
                     arr.push({
-                        id: childSnapshot.key,
+                        idMyVoucher: childSnapshot.key,
+                        id: item.id,
+                        quantity: item.quantity,
+                        price: item.price,
+                        value: item.value,
                         title: item.title,
                     });
                 })
@@ -54,7 +60,11 @@ const VoucherStore = () => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <View style={{ width: '100%', height: 50, backgroundColor: '#AA0000', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{
+                width: '100%', height: 50,
+                backgroundColor: '#AA0000', justifyContent: 'center',
+                alignItems: 'center', marginBottom: 10,
+            }}>
                 <Text style={{ fontWeight: 'bold', color: 'yellow', fontSize: 18 }}>Thanh toán</Text>
             </View>
             <TouchableOpacity
@@ -83,11 +93,17 @@ const VoucherStore = () => {
                             <Swipeable
                                 renderRightActions={rightSwipe}
                                 onSwipeableOpen={() => {
-                                    onComponentOpen(item.id);
+                                    onComponentOpen(item.idMyVoucher);
                                 }}
                             >
                                 <TouchableOpacity
-                                    style={{ flex: 1, padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    style={{
+                                        flex: 1,
+                                        marginBottom: 10,
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center'
+                                    }}>
                                     <View
                                         style={{
                                             width: '99%',

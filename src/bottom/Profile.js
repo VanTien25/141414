@@ -4,9 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { firebase } from '@react-native-firebase/auth';
 import auth from '@react-native-firebase/auth';
 
-let name = '';
+
 const Profile = () => {
   const navigation = useNavigation();
+  const email = firebase.auth().currentUser.email;
+  console.log(email);
 
   const logOut = () => {
     auth()
@@ -14,13 +16,6 @@ const Profile = () => {
       .then(() => Alert.alert('Đăng xuất thành công'));
   }
 
-  useEffect(() => {
-    getData();
-  }, []);
-  const getData = () => {
-    name = firebase.auth().currentUser.email;
-    console.log(name);
-  };
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -57,7 +52,7 @@ const Profile = () => {
         style={{ width: 80, height: 80, alignSelf: 'center', marginTop: 30 }}
       />
       <Text style={{ alignSelf: 'center', marginTop: 20, fontSize: 18, color: 'black' }}>
-        {name}
+        {email}
       </Text>
       <TouchableOpacity
         style={{
@@ -145,6 +140,20 @@ const Profile = () => {
           justifyContent: 'center',
         }}>
         <Text style={{ color: 'black' }}>SliderMan</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Payment');
+        }}
+        style={{
+          width: '90%',
+          alignSelf: 'center',
+          height: 50,
+          borderBottomWidth: 0.3,
+          borderBottomColor: '#8e8e8e',
+          justifyContent: 'center',
+        }}>
+        <Text style={{ color: 'black' }}>Payment</Text>
       </TouchableOpacity>
     </View>
   );
