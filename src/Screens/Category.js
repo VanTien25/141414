@@ -51,7 +51,7 @@ const Category = ({ route }) => {
         {
           dataCat.map((item) => {
             if (item.category == nameCat) {
-              return (<CategoryCart item={item} />)
+              return (<CategoryCart key={item.id} item={item} />)
             }
           })
         }

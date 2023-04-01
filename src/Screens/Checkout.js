@@ -3,7 +3,6 @@ import {
     Text,
     FlatList,
     Image,
-    SafeAreaView,
     TouchableOpacity,
     ImageBackground,
 } from 'react-native';
@@ -11,7 +10,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/auth';
-import { Alert } from 'react-native';
 
 const Checkout = ({ route }) => {
     const [total, setTotal] = useState(route.params.total);
@@ -21,23 +19,23 @@ const Checkout = ({ route }) => {
     const [addressPay, setAddressPay] = useState([]);
     const [listAddress, setListAddress] = useState([]);
     const [listVoucher, setListVoucher] = useState([]);
+    const [currentDate, setCurrentDate] = useState('');
     const navigation = useNavigation();
     const listProduct = route.params.dataCart;
 
-    var idProduct = listProduct.map((item) => {
-        database()
-            .ref('Product/' + userId + '/' + item.id)
-            .on('value', snapshot => {
-                let arr = [];
-                snapshot.forEach(childSnapshot => {
-                    var item = childSnapshot.val();
-                    arr.push({
-                        item,
-                    })
-                    console.log(arr);
-                })
-            });
-    })
+    console.log(listProduct)
+
+    useEffect(() => {
+        var date = new Date().getDate()
+        var month = new Date().getMonth() + 1
+        var year = new Date().getFullYear()
+        var hours = new Date().getHours()
+        var min = new Date().getMinutes()
+        var sec = new Date().getSeconds()
+        setCurrentDate(
+            date + '/' + month + '/' + year + '  ' + hours + ':' + min + ':' + sec
+        )
+    }, [])
 
 
     useEffect(() => {
@@ -69,7 +67,14 @@ const Checkout = ({ route }) => {
                 let arr = [];
                 snapshot.forEach(childSnapshot => {
                     var item = childSnapshot.val();
-                    arr.push(item);
+                    arr.push({
+                        idMyvoucher: childSnapshot.key,
+                        id: item.id,
+                        title: item.title,
+                        price: item.price,
+                        quantity: item.quantity,
+                        value: item.value,
+                    });
                 })
                 setListVoucher(arr);
             });
@@ -128,9 +133,10 @@ const Checkout = ({ route }) => {
                 <Text style={{ color: 'red', fontSize: 18 }}>Địa chỉ nhận hàng</Text>
             </View>
             {
-                listAddress.map((item) => {
+                listAddress.map((item, index) => {
                     return (
                         <TouchableOpacity
+                            key={item.id}
                             onPress={() => setType(item)}
                             style={type === item ? {
                                 width: '100%',
@@ -168,13 +174,15 @@ const Checkout = ({ route }) => {
                 })
             }
             {
-                listProduct.map((item) => {
+                listProduct.map((item, index) => {
                     return (
-                        <View style={{
-                            width: '100%', height: 100, borderBottomWidth: 3,
-                            flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#DDDDDD',
-                            justifyContent: 'space-between', alignItems: 'center',
-                        }}>
+                        <View
+                            key={item.id}
+                            style={{
+                                width: '100%', height: 100, borderBottomWidth: 3,
+                                flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#DDDDDD',
+                                justifyContent: 'space-between', alignItems: 'center',
+                            }}>
                             <Image
                                 src={item.image}
                                 style={{ width: '40%', height: '85%', resizeMode: 'contain' }}
@@ -235,6 +243,7 @@ const Checkout = ({ route }) => {
                         data={listVoucher}
                         horizontal
                         showsHorizontalScrollIndicator={false}
+                        keyExtractor={item => item.idMyvoucher}
                         renderItem={({ item, index }) => {
                             return (
                                 <TouchableOpacity
@@ -283,27 +292,12 @@ const Checkout = ({ route }) => {
                 {
                     type === '' ? (
                         <View
-                            onPress={() => {
-                                database()
-                                    .ref('Payment/' + userId)
-                                    .push()
-                                    .set({
-                                        address: addressPay,
-                                        item: listProduct,
-                                        totalStar: route.params.totalStar,
-                                        total: total,
-                                    })
-                                    .then(() =>
-                                        alert('Thanh toán thành công.'),
-                                        navigation.navigate('Main')
-                                    );
-                            }}
                             style={{
                                 width: '25%',
                                 height: '100%',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                backgroundColor: '#AA0000'
+                                backgroundColor: '#DDDDDD'
                             }}>
                             <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>Đặt hàng</Text>
                         </View>
@@ -318,6 +312,8 @@ const Checkout = ({ route }) => {
                                         item: listProduct,
                                         totalStar: route.params.totalStar,
                                         total: total,
+                                        date: currentDate,
+                                        status: "1",
                                     })
                                     .then(() => {
                                         alert('Đặt hàng thành công.');

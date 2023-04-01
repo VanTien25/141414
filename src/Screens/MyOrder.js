@@ -2,8 +2,6 @@ import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/auth';
-import { addAddress } from '../redux/actions/Actions';
-import { ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const MyOrder = () => {
@@ -22,12 +20,16 @@ const MyOrder = () => {
                     var item = childSnapshot.val();
                     arr.push({
                         id: childSnapshot.key,
+                        address: item.address,
+                        date: item.date,
+                        item: item.item,
+                        status: item.status,
                         total: item.total,
                         totalStar: item.totalStar,
                     })
                 })
                 setItemPay(arr);
-                console.log(arr)
+                console.log(arr);
             });
     }, [])
 
@@ -59,9 +61,21 @@ const MyOrder = () => {
                 data={itemPay}
                 renderItem={({ item, index }) => {
                     return (
-                        <View
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate('DetailMyOrder', {
+                                    id: item.id,
+                                    address: item.address,
+                                    date: item.date,
+                                    item: item.item,
+                                    status: item.status,
+                                    total: item.total,
+                                    totalStar: item.totalStar,
+                                })
+                            }}
                             style={{
                                 width: '100%',
+                                height: 100,
                                 backgroundColor: '#fff',
                                 justifyContent: 'flex-start',
                                 flexDirection: 'row',
@@ -70,15 +84,14 @@ const MyOrder = () => {
                                 borderBottomWidth: 4,
                                 borderBottomColor: '#DDDDDD'
                             }}>
-                            <View style={{ width: '10%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20}}>{index + 1}</Text>
+                            <View style={{ width: '10%', height: '100%', justifyContent: 'center', alignItems: 'center', borderRightWidth: 0.5 }}>
+                                <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>{index + 1}</Text>
                             </View>
-                            <View style={{ width: '80%', height: '100%', paddingLeft: 15 }}>
-                                <Text style={{ color: 'black', fontSize: 16, fontWeight: '500' }}>Mã đơn hàng: {item.id}</Text>
-                                <Text style={{ fontSize: 18 }}>Tổng tiền: ₫{item.total}</Text>
-                                <Text style={{ fontSize: 18 }}>Tổng tích lũy: {item.totalStar}</Text>
+                            <View style={{ width: '90%', height: '100%', paddingLeft: 15, justifyContent: 'space-evenly' }}>
+                                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Mã đơn hàng:   {item.id.length > 15 ? item.id.substring(0, 15) + '...' : item.id}</Text>
+                                <Text style={{ fontSize: 18 }}>Ngày đặt:   {item.date}</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     )
                 }}
             />

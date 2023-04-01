@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 
 import { useNavigation } from '@react-navigation/native'
 import database, { firebase } from '@react-native-firebase/database';
-import Size from '../common/Size';
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();

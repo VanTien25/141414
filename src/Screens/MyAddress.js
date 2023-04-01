@@ -1,17 +1,13 @@
 import { View, Text, TouchableOpacity, Image, FlatList, SafeAreaView, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteAddress } from '../redux/actions/Actions';
 import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/auth';
 import { Swipeable } from 'react-native-gesture-handler';
 
 const MyAddress = ({ route }) => {
     const [listAddress, setListAddress] = useState([])
-    const [selectedAddress, setSelectedAddress] = useState();
     const navigation = useNavigation();
-    const dispatch = useDispatch();
     const userId = firebase.auth().currentUser.uid;
 
     const rightSwipe = () => {

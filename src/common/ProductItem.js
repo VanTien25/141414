@@ -26,18 +26,18 @@ const ProductItem = ({ item, index }) => {
             style={{
                 borderRadius: 10,
                 elevation: 5,
-                width: 180,
+                width: 190,
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: '#fff',
-                marginBottom: 15,
+                marginBottom: 10,
             }}>
             <View style={{ width: '100%' }}>
                 <Image
                     src={item.image}
                     style={{
                         width: '100%',
-                        height: 120,
+                        height: 100,
                         resizeMode: 'contain',
                         borderTopLeftRadius: 20,
                         borderTopRightRadius: 20,

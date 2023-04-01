@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import database from '@react-native-firebase/database';
 import auth, { firebase } from '@react-native-firebase/auth';
 
 import Splash from './Screens/Splash';
@@ -19,14 +18,20 @@ import ForgotPass from './Screens/ForgotPass';
 import Code from './Screens/Code';
 import Detail from './Screens/Detail';
 import Category from './Screens/Category';
-import ProductsManager from './Screens/ProductsManager';
-import CategoriesMan from './Screens/CategoriesMan';
 import OrderCustom from './Screens/OrderCustom'
-import SliderMan from './Screens/SliderMan'
 import VoucherStore from './Screens/VoucherStore'
 import MyOrder from './Screens/MyOrder'
 import SearchScreen from './Screens/SearchScreen'
-import Payment from './Screens/Payment'
+import Admin from './Screens/Admin'
+import AdminDetail from './Screens/AdminDetail'
+import AddProduct from './Screens/AddProduct'
+import AddVoucher from './Screens/AddVoucher'
+import ListOrder from './Screens/ListOrder'
+import AddCategory from './Screens/AddCategory'
+import AddBanner from './Screens/AddBanner'
+import DetailMyOrder from './Screens/DetailMyOrder'
+import DetailOrderAdmin from './Screens/DetailOrderAdmin'
+import ListWait from './Screens/ListWait'
 
 const Stack = createStackNavigator();
 
@@ -67,8 +72,9 @@ const AppNavigator = () => {
 
         );
     }
+
     return (
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen
                 options={{ headerShown: false }}
                 name="Home"
@@ -116,21 +122,6 @@ const AppNavigator = () => {
 
             <Stack.Screen
                 options={{ headerShown: false }}
-                name="ProductsManager"
-                component={ProductsManager} />
-
-            <Stack.Screen
-                options={{ headerShown: false }}
-                name="CategoriesMan"
-                component={CategoriesMan} />
-
-            <Stack.Screen
-                options={{ headerShown: false }}
-                name="SliderMan"
-                component={SliderMan} />
-
-            <Stack.Screen
-                options={{ headerShown: false }}
                 name="OrderCustom"
                 component={OrderCustom} />
 
@@ -151,8 +142,53 @@ const AppNavigator = () => {
 
             <Stack.Screen
                 options={{ headerShown: false }}
-                name="Payment"
-                component={Payment} />
+                name="AdminDetail"
+                component={AdminDetail} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Admin"
+                component={Admin} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="AddProduct"
+                component={AddProduct} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="AddVoucher"
+                component={AddVoucher} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="ListOrder"
+                component={ListOrder} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="AddCategory"
+                component={AddCategory} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="AddBanner"
+                component={AddBanner} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="DetailMyOrder"
+                component={DetailMyOrder} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="DetailOrderAdmin"
+                component={DetailOrderAdmin} />
+
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="ListWait"
+                component={ListWait} />
 
         </Stack.Navigator>
     )

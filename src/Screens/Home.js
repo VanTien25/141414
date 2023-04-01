@@ -20,7 +20,7 @@ const Home = () => {
           backgroundColor: '#FFCC33',
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
-          height: 60,
+          height: 50,
           shadowColor: '#7F5DF0',
           shadowOffset: {
             width: 0,

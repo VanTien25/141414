@@ -39,7 +39,7 @@ const Login = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        navigation.navigate('Home');
+        Alert.alert('Đăng nhập thành công!');
       }).catch(() => {
         setModalVisible(false);
         Alert.alert('Đăng nhập không thành công!');

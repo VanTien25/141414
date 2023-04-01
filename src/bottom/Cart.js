@@ -1,6 +1,5 @@
 import { View, Text, FlatList, TouchableOpacity, Image, ImageBackground, Modal, Pressable } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import CommonButton from '../common/CommonButton';
 import { Swipeable } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
@@ -75,6 +74,7 @@ const Cart = () => {
       {dataCart.length > 0 ? (
         <FlatList
           data={dataCart}
+          keyExtractor={item => item.id}
           renderItem={({ item, index }) => {
             return (
               <Swipeable

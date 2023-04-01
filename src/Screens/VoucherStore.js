@@ -65,7 +65,7 @@ const VoucherStore = () => {
                 backgroundColor: '#AA0000', justifyContent: 'center',
                 alignItems: 'center', marginBottom: 10,
             }}>
-                <Text style={{ fontWeight: 'bold', color: 'yellow', fontSize: 18 }}>Thanh toán</Text>
+                <Text style={{ fontWeight: 'bold', color: 'yellow', fontSize: 18 }}>Danh sách voucher</Text>
             </View>
             <TouchableOpacity
                 onPress={() => {
@@ -88,6 +88,7 @@ const VoucherStore = () => {
             {listVoucher.length > 0 ? (
                 <FlatList
                     data={listVoucher}
+                    keyExtractor={item => item.idMyVoucher}
                     renderItem={({ item, index }) => {
                         return (
                             <Swipeable

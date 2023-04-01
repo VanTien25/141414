@@ -75,11 +75,11 @@ const Main = () => {
 
   return (
     <>
-      <ScrollView style={{ flex: 1 }}>
+      {/* <ScrollView style={{ flex: 1 }}> */}
         <View style={{ flex: 1 }}>
 
           {/* Banner */}
-          <View style={{ width: '100%', height: 180, alignSelf: 'center' }}>
+          <View style={{ width: '100%', height: 150, alignSelf: 'center' }}>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -106,11 +106,12 @@ const Main = () => {
           </View>
 
           {/* List Button Category */}
-          <View style={{ width: '100%', height: 80, marginTop: 10, backgroundColor: '#DDDDDD', flexDirection: 'row' }}>
+          <View style={{ width: '100%', height: 60, marginTop: 10, backgroundColor: '#DDDDDD', flexDirection: 'row' }}>
             <FlatList
               data={categories}
               horizontal
               showsHorizontalScrollIndicator={false}
+              keyExtractor={item => item.name}
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
@@ -120,7 +121,7 @@ const Main = () => {
                         listProduct
                       });
                     }}
-                    style={{ width: 60, height: 60, alignSelf: 'center', borderRadius: 10, backgroundColor: '#fff', marginLeft: 18, borderRadius: 100 }}>
+                    style={{ width: 50, height: 50, alignSelf: 'center', borderRadius: 10, backgroundColor: '#fff', marginLeft: 18, borderRadius: 100 }}>
                     <Image
                       src={item.image}
                       style={{
@@ -138,11 +139,12 @@ const Main = () => {
           <View style={{ backgroundColor: '#AA0000', width: '100%', height: 30, marginTop: 10, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
             <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Danh sách sản phẩm</Text>
           </View>
-          <View style={{ marginTop: 10, marginBottom: 200 }}>
+          <View style={{ marginTop: 10, marginBottom: 260 }}>
             <FlatList
               data={listProduct}
               showsVerticalScrollIndicator={false}
               columnWrapperStyle={{ justifyContent: 'space-evenly' }}
+              keyExtractor={item => item.id}
               numColumns={2}
               renderItem={({ item, index }) => {
                 return (
@@ -154,7 +156,7 @@ const Main = () => {
             />
           </View>
         </View>
-      </ScrollView>
+      {/* </ScrollView> */}
       <Search />
     </>
   );

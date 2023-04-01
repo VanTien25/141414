@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import CustomTextInput from '../common/CustomTextInput';
 import CommonButton from '../common/CommonButton';
-import { useDispatch } from 'react-redux';
-import { addAddress } from '../redux/actions/Actions';
 import { firebase } from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 
@@ -16,7 +14,6 @@ const AddAddress = () => {
     const [address, setAddress] = useState('');
     // const [pin, setPin] = useState('');
     const userId = firebase.auth().currentUser.uid;
-    const dispatch = useDispatch();
     return (
         <View style={{ flex: 1 }}>
             <View

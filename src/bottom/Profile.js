@@ -8,7 +8,6 @@ import auth from '@react-native-firebase/auth';
 const Profile = () => {
   const navigation = useNavigation();
   const email = firebase.auth().currentUser.email;
-  console.log(email);
 
   const logOut = () => {
     auth()
@@ -22,7 +21,7 @@ const Profile = () => {
         style={{
           width: '100%',
           height: 70,
-          justifyContent: 'space-between',
+          justifyContent: 'flex-start',
           flexDirection: 'row',
           alignItems: 'center',
           backgroundColor: '#AA0000'
@@ -30,22 +29,32 @@ const Profile = () => {
         <Text style={{ fontWeight: '600', fontSize: 22, marginLeft: 15, color: 'yellow' }}>
           Profile
         </Text>
-        <TouchableOpacity
-          onPress={() => {
-            logOut();
-          }}
-          style={{
-            width: 30,
-            height: 30,
-            marginRight: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Image
-            source={require('../images/logout.png')}
-            style={{ width: 30, height: 30, tintColor: 'yellow' }}
-          />
-        </TouchableOpacity>
+      </View>
+      <View style={{ position: 'absolute', top: 20, right: 15, flexDirection: 'row' }}>
+        {
+          email == "admin@gmail.com" ?
+            (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Admin');
+                }}
+                style={{
+                  width: 30,
+                  height: 30,
+                  marginRight: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../images/manager.png')}
+                  style={{ width: 30, height: 30, tintColor: 'yellow' }}
+                />
+              </TouchableOpacity>
+            ) : null
+        }
+
+
+
       </View>
       <Image
         source={require('../images/profile.png')}
@@ -97,50 +106,7 @@ const Profile = () => {
         }}>
         <Text style={{ color: 'black' }}>Kho Voucher</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('ProductsManager')
-        }}
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          height: 50,
-          borderBottomWidth: 0.3,
-          borderBottomColor: '#8e8e8e',
-          justifyContent: 'center',
-        }}>
-        <Text style={{ color: 'black' }}>ProductsManager</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('CategoriesMan')
-        }}
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          height: 50,
-          borderBottomWidth: 0.3,
-          borderBottomColor: '#8e8e8e',
-          justifyContent: 'center',
-        }}>
-        <Text style={{ color: 'black' }}>CategoriesManager</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('SliderMan')
-        }}
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          height: 50,
-          borderBottomWidth: 0.3,
-          borderBottomColor: '#8e8e8e',
-          justifyContent: 'center',
-        }}>
-        <Text style={{ color: 'black' }}>SliderMan</Text>
-      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Payment');
@@ -155,6 +121,28 @@ const Profile = () => {
         }}>
         <Text style={{ color: 'black' }}>Payment</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          logOut();
+        }}
+        style={{
+          width: '90%',
+          alignSelf: 'center',
+          height: 50,
+          borderBottomWidth: 0.3,
+          borderBottomColor: '#8e8e8e',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row'
+        }}>
+        <Text style={{ color: 'black' }}>Đăng xuất</Text>
+        <Image
+          source={require('../images/logout.png')}
+          style={{ width: 30, height: 30, tintColor: 'black' }}
+        />
+      </TouchableOpacity>
+
     </View>
   );
 };

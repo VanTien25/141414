@@ -1,6 +1,5 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {useSelector} from 'react-redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
 const OrderSucess = () => {
